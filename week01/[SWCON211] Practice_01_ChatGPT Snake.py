@@ -36,6 +36,28 @@ score = 0
 def Your_score(score):
     value = pygame.font.SysFont('comicsans', 30).render("Your Score: " + str(score), True, WHITE)
     window.blit(value, [0, 0])
+    
+def initialize_game():
+    global direction, change_to
+    global snake_pos, snake_body
+    global food_pos, food_spawn
+    global score, framerate
+    
+    # Snake and food properties
+    snake_pos = [100, 50]
+    snake_body = [[100, 50], [90, 50], [80, 50]]
+    food_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+    food_spawn = True
+
+    # Direction
+    direction = 'RIGHT'
+    change_to = direction
+
+    # Initial frame rate
+    framerate = 15
+
+    # Score
+    score = 0
 
 # Main Function
 def gameLoop():
@@ -61,6 +83,7 @@ def gameLoop():
                         game_over = True
                         game_close = False
                     if event.key == pygame.K_c:
+                        initialize_game()
                         gameLoop()
 
         for event in pygame.event.get():
