@@ -54,7 +54,8 @@ def initialize_game():
     global snake_pos, snake_body
     global food_pos, food_spawn
     global score, framerate
-    
+    global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
+
     # Snake and food properties
     snake_pos = [100, 50]
     snake_body = [[100, 50], [90, 50], [80, 50]]
@@ -70,6 +71,14 @@ def initialize_game():
 
     # Score
     score = 0
+
+    # Fever mode
+    is_fever = False
+    fever_length = 5
+    fever_score_scale = 1.5
+    fever_framerate_scale = 2
+    fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+    fever_spawn = True
     
 def spawn_fever():
     global fever_spawn, fever_pos
