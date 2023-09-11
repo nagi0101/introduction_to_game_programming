@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+from math import sin, sqrt
 
 # Initialize pygame
 pygame.init()
@@ -15,7 +16,13 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+ORANGE=(255, 165, 0)
 YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
+NAVY = (0, 0, 128)
+PURPLE = (128, 0, 128)
+RAINBOW = [RED, ORANGE, YELLOW, GREEN, BLUE, NAVY, PURPLE]
+
 
 # Snake and food properties
 snake_pos = [100, 50]
@@ -43,6 +50,17 @@ fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT/
 fever_spawn = True
 fever_start = time.time()
 
+def render_fever_background():
+    pixel_size = 10
+    center_pos = (WIDTH // 2, HEIGHT // 2);
+    for y in range(0, HEIGHT // pixel_size):
+        for x in range(0, WIDTH // pixel_size):
+            xpos = x * pixel_size
+            ypos = y * pixel_size
+            dist = sqrt((center_pos[0] - xpos) ** 2 + (center_pos[1] - ypos) ** 2)
+            index = int(sin(dist / WIDTH - time.time()) * 7 + 0.5) % 7
+            pixel_color = RAINBOW[index]
+            pygame.draw.rect(window, pixel_color, pygame.Rect(xpos, ypos, pixel_size, pixel_size))
 
 # Display Score function
 def Your_score(score):
@@ -85,6 +103,23 @@ def spawn_fever():
     
     fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
     fever_spawn = True
+
+def render():
+    window.fill(BLACK)
+    if is_fever:
+        render_fever_background()
+    snake_color = BLACK if is_fever else GREEN
+    for pos in snake_body:
+        pygame.draw.rect(window, snake_color, pygame.Rect(pos[0], pos[1], 10, 10))
+    if(food_spawn):
+        food_color = BLACK if is_fever else RED
+        pygame.draw.rect(window, food_color, pygame.Rect(food_pos[0], food_pos[1], 10, 10))
+    if(fever_spawn):
+        pygame.draw.rect(window, YELLOW, pygame.Rect(fever_pos[0], fever_pos[1], 10, 10))
+
+    pygame.display.update()
+    apply_framerate = framerate * fever_framerate_scale if is_fever else framerate
+    pygame.time.Clock().tick(apply_framerate)
 
 # Main Function
 def gameLoop():
@@ -173,14 +208,6 @@ def gameLoop():
             if time.time() - fever_start > fever_length:
                 is_fever = False
 
-        window.fill(BLACK)
-        for pos in snake_body:
-            pygame.draw.rect(window, GREEN, pygame.Rect(pos[0], pos[1], 10, 10))
-        if(food_spawn):
-            pygame.draw.rect(window, RED, pygame.Rect(food_pos[0], food_pos[1], 10, 10))
-        if(fever_spawn):
-            pygame.draw.rect(window, YELLOW, pygame.Rect(fever_pos[0], fever_pos[1], 10, 10))
-
         # Game Over conditions
         if snake_pos[0] < 0 or snake_pos[0] > WIDTH-10:
             game_close = True
@@ -192,10 +219,8 @@ def gameLoop():
             if snake_pos[0] == block[0] and snake_pos[1] == block[1]:
                 game_close = True
 
-        pygame.display.update()
-        # Limit frame rate to 15 Hz
-        apply_framerate = framerate * fever_framerate_scale if is_fever else framerate
-        pygame.time.Clock().tick(apply_framerate)
+        render()
+        
 
     pygame.quit()
     quit()
