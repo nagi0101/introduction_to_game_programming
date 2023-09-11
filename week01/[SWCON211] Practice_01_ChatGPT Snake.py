@@ -52,7 +52,7 @@ fever_start = time.time()
 
 def render_fever_background():
     pixel_size = 10
-    center_pos = (WIDTH // 2, HEIGHT // 2);
+    center_pos = (WIDTH // 2, HEIGHT // 2)
     for y in range(0, HEIGHT // pixel_size):
         for x in range(0, WIDTH // pixel_size):
             xpos = x * pixel_size
