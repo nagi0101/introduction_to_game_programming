@@ -40,6 +40,7 @@ framerate = 15
 
 # Score
 score = 0
+highscore = score
 
 # Fever mode
 is_fever = False
@@ -63,9 +64,11 @@ def render_fever_background():
             pygame.draw.rect(window, pixel_color, pygame.Rect(xpos, ypos, pixel_size, pixel_size))
 
 # Display Score function
-def Your_score(score):
+def Your_score(score, highscore):
     value = pygame.font.SysFont('comicsans', 30).render("Your Score: " + str(score), True, WHITE)
     window.blit(value, [0, 0])
+    value = pygame.font.SysFont('comicsans', 30).render("Highscore: " + str(highscore), True, WHITE)
+    window.blit(value, [0, 40])
     
 def initialize_game():
     global direction, change_to
@@ -126,7 +129,7 @@ def gameLoop():
     global direction, change_to
     global snake_pos, snake_body
     global food_pos, food_spawn, score_per_food
-    global score, framerate
+    global score, highscore, framerate
     
     global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
 
@@ -136,8 +139,9 @@ def gameLoop():
 
     while not game_over:
         while game_close == True:
+            highscore = max(highscore, score)
             window.fill(BLACK)
-            Your_score(score)
+            Your_score(score, highscore)
             pygame.display.update()
 
             # Asking user to play again or quit
