@@ -51,6 +51,11 @@ fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT/
 fever_spawn = True
 fever_start = time.time()
 
+# Dead
+is_dead = False
+dead_effect_length = 1.5
+last_dead = time.time()
+
 def render_fever_background():
     pixel_size = 40
     center_pos = (WIDTH // 2, HEIGHT // 2)
@@ -79,6 +84,7 @@ def initialize_game():
     global food_pos, food_spawn
     global score, framerate
     global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
+    global is_dead
 
     # Snake and food properties
     snake_pos = [100, 50]
@@ -104,19 +110,25 @@ def initialize_game():
     fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
     fever_spawn = True
     
+    # Dead
+    is_dead = False
+    
 def spawn_fever():
     global fever_spawn, fever_pos
     
     fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
     fever_spawn = True
 
+def render_snake(color):
+    for pos in snake_body:
+        pygame.draw.rect(window, color, pygame.Rect(pos[0], pos[1], 10, 10))
+
 def render():
     window.fill(BLACK)
     if is_fever:
         render_fever_background()
     snake_color = BLACK if is_fever else GREEN
-    for pos in snake_body:
-        pygame.draw.rect(window, snake_color, pygame.Rect(pos[0], pos[1], 10, 10))
+    render_snake(snake_color)
     if(food_spawn):
         food_color = BLACK if is_fever else RED
         pygame.draw.rect(window, food_color, pygame.Rect(food_pos[0], food_pos[1], 10, 10))
@@ -127,6 +139,26 @@ def render():
     apply_framerate = framerate * fever_framerate_scale if is_fever else framerate
     pygame.time.Clock().tick(apply_framerate)
 
+def dead():
+    global is_dead, last_dead
+    is_dead = True
+    last_dead = time.time()
+    
+def check_dead():
+    # Game Over conditions
+    if snake_pos[0] < 0 or snake_pos[0] > WIDTH-10:
+        dead()
+        return
+    if snake_pos[1] < 0 or snake_pos[1] > HEIGHT-10:
+        dead()
+        return
+        
+    # Touching the snake body
+    for block in snake_body[1:]:
+        if snake_pos[0] == block[0] and snake_pos[1] == block[1]:
+            dead()
+            return
+            
 # Main Function
 def gameLoop():
     global direction, change_to
@@ -135,12 +167,23 @@ def gameLoop():
     global score, highscore, framerate
     
     global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
+    global is_dead, dead_effect_length, last_dead
 
     # Game Over
     game_over = False
     game_close = False
 
     while not game_over:
+        if is_dead:
+            while time.time() - last_dead < dead_effect_length:
+                color = [BLACK, WHITE]
+                i = int(time.time() * 2 - int(time.time() * 2) + 0.5)
+                k = 1 - i
+                window.fill(color[i])
+                render_snake(color[k])
+                pygame.display.update()
+            game_close = True
+            
         while game_close == True:
             highscore = max(highscore, score)
             window.fill(BLACK)
@@ -215,16 +258,7 @@ def gameLoop():
             if time.time() - fever_start > fever_length:
                 is_fever = False
 
-        # Game Over conditions
-        if snake_pos[0] < 0 or snake_pos[0] > WIDTH-10:
-            game_close = True
-        if snake_pos[1] < 0 or snake_pos[1] > HEIGHT-10:
-            game_close = True
-
-        # Touching the snake body
-        for block in snake_body[1:]:
-            if snake_pos[0] == block[0] and snake_pos[1] == block[1]:
-                game_close = True
+        check_dead()
 
         render()
         
