@@ -77,6 +77,8 @@ def Your_score(score, highscore):
     window.blit(value, [0, 0])
     value = pygame.font.SysFont('comicsans', 30).render("Highscore: " + str(highscore), True, WHITE)
     window.blit(value, [0, 40])
+    value = pygame.font.SysFont('comicsans', 30).render("Press c to continue", True, WHITE)
+    window.blit(value, [0, HEIGHT - 40])
     
 def initialize_game():
     global direction, change_to
