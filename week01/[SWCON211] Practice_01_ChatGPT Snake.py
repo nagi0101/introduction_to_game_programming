@@ -247,7 +247,7 @@ def gameLoop():
         else:
             snake_body.pop()
             
-        if snake_pos[0] == fever_pos[0] and snake_pos[1] == fever_pos[1]:
+        if fever_spawn and snake_pos[0] == fever_pos[0] and snake_pos[1] == fever_pos[1]:
             is_fever = True
             fever_spawn = False
             fever_start = time.time()
