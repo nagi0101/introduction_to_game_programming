@@ -1,7 +1,7 @@
 import pygame
 import time
 import random
-from math import sin, sqrt
+from math import sqrt
 
 # Initialize pygame
 pygame.init()
@@ -52,14 +52,17 @@ fever_spawn = True
 fever_start = time.time()
 
 def render_fever_background():
-    pixel_size = 10
+    pixel_size = 40
     center_pos = (WIDTH // 2, HEIGHT // 2)
     for y in range(0, HEIGHT // pixel_size):
         for x in range(0, WIDTH // pixel_size):
             xpos = x * pixel_size
             ypos = y * pixel_size
-            dist = sqrt((center_pos[0] - xpos) ** 2 + (center_pos[1] - ypos) ** 2)
-            index = int(sin(dist / WIDTH - time.time()) * 7 + 0.5) % 7
+            pixel_vec = [center_pos[0] - xpos, center_pos[1] - ypos]
+            dist = sqrt(pixel_vec[0] ** 2 + pixel_vec[1] ** 2)
+            wave_arg = dist / 1000 - time.time() / 2
+            wave_zero_one = abs(wave_arg - int(wave_arg))
+            index = int((abs((wave_zero_one - 0.5) * 12) + 0.5))
             pixel_color = RAINBOW[index]
             pygame.draw.rect(window, pixel_color, pygame.Rect(xpos, ypos, pixel_size, pixel_size))
 
