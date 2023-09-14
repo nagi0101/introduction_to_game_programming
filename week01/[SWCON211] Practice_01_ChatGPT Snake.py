@@ -27,7 +27,10 @@ RAINBOW = [RED, ORANGE, YELLOW, GREEN, BLUE, NAVY, PURPLE]
 # Snake and food properties
 snake_pos = [100, 50]
 snake_body = [[100, 50], [90, 50], [80, 50]]
-food_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+food_pos = [
+    random.randrange(1, (WIDTH//10)) * 10, 
+    random.randrange(1, (HEIGHT//10)) * 10
+    ]
 food_spawn = True
 score_per_food = 1
 
@@ -47,7 +50,10 @@ is_fever = False
 fever_length = 5
 fever_score_scale = 1.5
 fever_framerate_scale = 2
-fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+fever_pos = [
+    random.randrange(1, (WIDTH//10)) * 10, 
+    random.randrange(1, (HEIGHT//10)) * 10
+    ]
 fever_spawn = True
 fever_start = time.time()
 
@@ -85,13 +91,17 @@ def initialize_game():
     global snake_pos, snake_body
     global food_pos, food_spawn
     global score, framerate
-    global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
+    global is_fever, fever_length, fever_score_scale, fever_framerate_scale,\
+        fever_pos, fever_spawn, fever_start
     global is_dead
 
     # Snake and food properties
     snake_pos = [100, 50]
     snake_body = [[100, 50], [90, 50], [80, 50]]
-    food_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+    food_pos = [
+        random.randrange(1, (WIDTH//10)) * 10, 
+        random.randrange(1, (HEIGHT//10)) * 10
+        ]
     food_spawn = True
 
     # Direction
@@ -109,7 +119,10 @@ def initialize_game():
     fever_length = 5
     fever_score_scale = 1.5
     fever_framerate_scale = 2
-    fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+    fever_pos = [
+        random.randrange(1, (WIDTH//10)) * 10, 
+        random.randrange(1, (HEIGHT//10)) * 10
+        ]
     fever_spawn = True
     
     # Dead
@@ -118,7 +131,10 @@ def initialize_game():
 def spawn_fever():
     global fever_spawn, fever_pos
     
-    fever_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+    fever_pos = [
+        random.randrange(1, (WIDTH//10)) * 10, 
+        random.randrange(1, (HEIGHT//10)) * 10
+        ]
     fever_spawn = True
 
 def render_snake(color):
@@ -168,7 +184,8 @@ def gameLoop():
     global food_pos, food_spawn, score_per_food
     global score, highscore, framerate
     
-    global is_fever, fever_length, fever_score_scale, fever_framerate_scale, fever_pos, fever_spawn, fever_start
+    global is_fever, fever_length, fever_score_scale, fever_framerate_scale,\
+        fever_pos, fever_spawn, fever_start
     global is_dead, dead_effect_length, last_dead
 
     # Game Over
@@ -253,7 +270,10 @@ def gameLoop():
             fever_start = time.time()
 
         if not food_spawn:
-            food_pos = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+            food_pos = [
+                random.randrange(1, (WIDTH//10)) * 10, 
+                random.randrange(1, (HEIGHT//10)) * 10
+                ]
             food_spawn = True
             
         if is_fever:
