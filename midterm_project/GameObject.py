@@ -16,6 +16,6 @@ class GameObject:
         self.components.append(component)
         component.owner_object = self
 
-    def tick(self):
+    def tick(self, deltatime):
         for component in self.components:
-            component.tick()
+            component.tick(deltatime)

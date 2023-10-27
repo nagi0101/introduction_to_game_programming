@@ -23,7 +23,7 @@ class Game(metaclass=Singleton):
             self.screen.fill((0, 0, 0))  # fill the screen with black
             
             for object in self.game_objects:
-                object.tick()
+                object.tick(self.clock.get_time()/1000)
 
             # --- Go ahead and update the screen with what we've drawn
             pygame.display.flip()
@@ -53,7 +53,7 @@ class Game(metaclass=Singleton):
         # Set title of the window
         pygame.display.set_caption("My Pygame Window")
 
-        self.append_game_object(Player(50, 50, 64, 64))
+        self.append_game_object(Player())
 
         self.clock = pygame.time.Clock()
         self.clock.tick(60)
