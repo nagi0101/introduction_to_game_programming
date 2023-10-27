@@ -1,28 +1,20 @@
 import pygame
 import sys
-from Player import Player
 
-class Game:
-    _instance = None
+from Utils.Singleton import Singleton
+from Player import Player
+from Managers.EventManager import EventManager
+
+class Game(metaclass=Singleton):
     done = False
     game_objects = []
-    
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Game, cls).__new__(cls)
-        return cls._instance
 
     def run(self):
         self.init()
 
         # Main game loop
         while not self.done:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.done = True
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:  # end game when 'q' is pressed
-                        self.done = True
+            EventManager().tick()
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
@@ -42,6 +34,9 @@ class Game:
             pygame.display.flip()
         
         self.exit_game()
+        
+    def set_exit_flag(self, flag:bool):
+        self.done = flag
 
     def exit_game(self):
         # Close the window and quit.
@@ -65,10 +60,11 @@ class Game:
         # Create a player and an enemy
         self.player = Player(50, 50, 64, 64)
 
-        # Used to manage how fast the screen updates
         self.clock = pygame.time.Clock()
-        # --- Limit to 60 frames per second
         self.clock.tick(60)
+        
+        EventManager(self)
+        EventManager().add_handler(pygame.QUIT, lambda: self.set_exit_flag(True))
 
     def update(self):
         for game_object in self.game_objects:
