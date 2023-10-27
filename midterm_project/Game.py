@@ -1,13 +1,16 @@
 import pygame
 import sys
+from typing import List 
 
 from Utils.Singleton import Singleton
+from GameObject import GameObject
 from Player import Player
+
 from Managers.EventManager import EventManager
 
 class Game(metaclass=Singleton):
     done = False
-    game_objects = []
+    game_objects:List[GameObject] = []
 
     def run(self):
         self.init()
@@ -16,27 +19,20 @@ class Game(metaclass=Singleton):
         while not self.done:
             EventManager().tick()
 
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                self.player.move(dx=-5)
-            if keys[pygame.K_RIGHT]:
-                self.player.move(dx=5)
-            if keys[pygame.K_UP]:
-                self.player.move(dy=-5)
-            if keys[pygame.K_DOWN]:
-                self.player.move(dy=5)
-
             # --- Drawing code should go here
             self.screen.fill((0, 0, 0))  # fill the screen with black
-            pygame.draw.rect(self.screen, (255, 255, 255), self.player.rect)  # draw player
+            
+            for object in self.game_objects:
+                object.tick()
 
             # --- Go ahead and update the screen with what we've drawn
             pygame.display.flip()
         
         self.exit_game()
         
-    def set_exit_flag(self, flag:bool):
-        self.done = flag
+    def handle_exit(self, e:pygame.event.Event):
+        if(e.type == pygame.QUIT or e.key == pygame.K_q):
+            self.done = True
 
     def exit_game(self):
         # Close the window and quit.
@@ -57,18 +53,18 @@ class Game(metaclass=Singleton):
         # Set title of the window
         pygame.display.set_caption("My Pygame Window")
 
-        # Create a player and an enemy
-        self.player = Player(50, 50, 64, 64)
+        self.append_game_object(Player(50, 50, 64, 64))
 
         self.clock = pygame.time.Clock()
         self.clock.tick(60)
         
         EventManager(self)
-        EventManager().add_handler(pygame.QUIT, lambda: self.set_exit_flag(True))
+        EventManager().add_handler(pygame.QUIT, self.handle_exit)
+        EventManager().add_handler(pygame.KEYDOWN, self.handle_exit)
 
     def update(self):
         for game_object in self.game_objects:
             game_object.tick()
     
     def render(self):
-        ""
+        pass

@@ -1,4 +1,5 @@
 from BaseComponents import BaseComponents
 
 class RenderComponent(BaseComponents):
-    tickable = True
+    def tick(self, deltatime):
+        return super().tick(deltatime)

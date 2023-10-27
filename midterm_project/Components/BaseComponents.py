@@ -1,11 +1,10 @@
 class BaseComponents:
-    childs = []
+    parent = None
+    children = []
     owner_object = None
-    tickable = False
     
     def tick(self, deltatime):
-        for child in self.childs:
-            if self.tickable:
-                child.tick(deltatime)
+        for child in self.children:
+            child.tick(deltatime)
     
 

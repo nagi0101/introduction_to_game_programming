@@ -1,7 +1,8 @@
-import pygame
 from typing import Callable, List, Dict
 
-from Utils.Singleton import Singleton
+import pygame
+
+from Utils.Singleton import Singleton    
 
 class EventManager(metaclass=Singleton):
     game = None
@@ -21,9 +22,3 @@ class EventManager(metaclass=Singleton):
             if event.type in self._handlers.keys():
                 for handler in self._handlers[event.type]:
                     handler(event)
-                
-            if event.type == pygame.QUIT:
-                self.game.done = True
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:  # end game when 'q' is pressed
-                    self.game.done = True
