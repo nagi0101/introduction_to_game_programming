@@ -16,6 +16,6 @@ class Player(GameObject):
     def tick(self, deltatime):        
         self.rect.x = self.transform.translate.x
         self.rect.y = self.transform.translate.y
-        pygame.draw.rect(self.game.screen, (255, 255, 255), self.rect)
+        # pygame.draw.rect(self.game.screen, (255, 255, 255), self.rect)
         
         super().tick(deltatime)

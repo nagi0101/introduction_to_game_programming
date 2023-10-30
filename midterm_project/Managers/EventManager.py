@@ -17,7 +17,7 @@ class EventManager(metaclass=Singleton):
             self._handlers[event] = []
         self._handlers[event].append(handler)
     
-    def tick(self):
+    def consume_events(self):
         for event in pygame.event.get():
             if event.type in self._handlers.keys():
                 for handler in self._handlers[event.type]:

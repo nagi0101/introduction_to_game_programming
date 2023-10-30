@@ -14,48 +14,9 @@ class Game(metaclass=Singleton):
     done = False
     game_objects:List[GameObject] = []
 
-    def run(self):
-        self.init()
-
-        # Main game loop
-        while not self.done:
-            EventManager().tick()
-
-            # --- Drawing code should go here
-            self.screen.fill((0, 0, 0))  # fill the screen with black
-            
-            for object in self.game_objects:
-                object.tick(TimeManager().delta_second)
-
-            # --- Go ahead and update the screen with what we've drawn
-            pygame.display.flip()
-        
-        self.exit_game()
-        
-    def handle_exit(self, e:pygame.event.Event):
-        if(e.type == pygame.QUIT or e.key == pygame.K_q):
-            self.done = True
-
-    def exit_game(self):
-        # Close the window and quit.
-        pygame.quit()
-        sys.exit()
-
-    def append_game_object(self, object):
-        self.game_objects.append(object)
-        object.game = self
-
-    def init(self):
+    def __init__(self):
         pygame.init()
-
-        # Set the size of the window
-        size = (700, 500)
-        self.screen = pygame.display.set_mode(size)
-
-        # Set title of the window
         pygame.display.set_caption("My Pygame Window")
-
-        self.append_game_object(Player())
 
         TimeManager(self)
         TimeManager().framerate = 60
@@ -65,11 +26,29 @@ class Game(metaclass=Singleton):
         EventManager().add_handler(pygame.KEYDOWN, self.handle_exit)
 
         RenderManager(self)
+        
+        self.append_game_object(Player())
 
+    def run(self):
+        while not self.done:
+            EventManager().consume_events()
+            
+            for object in self.game_objects:
+                object.tick(TimeManager().delta_second)
+            
+            RenderManager().draw()
+        
+        self.exit_game()
+        
+    def handle_exit(self, e:pygame.event.Event):
+        if(e.type == pygame.QUIT or e.key == pygame.K_q):
+            self.done = True
 
-    def update(self):
-        for game_object in self.game_objects:
-            game_object.tick()
-    
-    def render(self):
-        pass
+    def exit_game(self):
+        pygame.quit()
+        sys.exit()
+
+    def append_game_object(self, object):
+        self.game_objects.append(object)
+        object.game = self
+
