@@ -7,6 +7,7 @@ from GameObject import GameObject
 from Player import Player
 
 from Managers.EventManager import EventManager
+from Managers.TimeManager import TimeManager
 
 class Game(metaclass=Singleton):
     done = False
@@ -23,7 +24,7 @@ class Game(metaclass=Singleton):
             self.screen.fill((0, 0, 0))  # fill the screen with black
             
             for object in self.game_objects:
-                object.tick(self.clock.get_time()/1000)
+                object.tick(TimeManager().delta_second)
 
             # --- Go ahead and update the screen with what we've drawn
             pygame.display.flip()
@@ -55,8 +56,8 @@ class Game(metaclass=Singleton):
 
         self.append_game_object(Player())
 
-        self.clock = pygame.time.Clock()
-        self.clock.tick(60)
+        TimeManager(self)
+        TimeManager().framerate = 60
         
         EventManager(self)
         EventManager().add_handler(pygame.QUIT, self.handle_exit)
