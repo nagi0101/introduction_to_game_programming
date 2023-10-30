@@ -8,6 +8,7 @@ from Player import Player
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
+from Managers.RenderManager import RenderManager
 
 class Game(metaclass=Singleton):
     done = False
@@ -62,6 +63,9 @@ class Game(metaclass=Singleton):
         EventManager(self)
         EventManager().add_handler(pygame.QUIT, self.handle_exit)
         EventManager().add_handler(pygame.KEYDOWN, self.handle_exit)
+
+        RenderManager(self)
+
 
     def update(self):
         for game_object in self.game_objects:
