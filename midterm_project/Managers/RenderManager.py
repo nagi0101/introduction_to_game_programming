@@ -9,16 +9,14 @@ else:
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-import numpy as np
-
 from Utils.Singleton import Singleton
 
 from Managers.TimeManager import TimeManager
-from Managers.MeshManager import MeshManager
 
 class RenderManager(metaclass=Singleton):
     _game=None
     _screen:pygame.Surface
+    _mesh_components=[]
     
     # Shader source
     _vertex_shader_source = b"""
@@ -67,25 +65,33 @@ class RenderManager(metaclass=Singleton):
         glAttachShader(self._shader_program, vertex_shader)
         glAttachShader(self._shader_program, fragment_shader)
         glLinkProgram(self._shader_program)
+        
+        glEnable(GL_CULL_FACE)
+        glEnable(GL_DEPTH_TEST)
+        glDepthMask(GL_TRUE)
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
-    def normalize(self, a):
-        return a / np.linalg.norm(a)
+    def append_mesh(self, mesh_component):
+        self._mesh_components.append(mesh_component)
     
     def draw(self) -> None:
         glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        glRotatef(pi * TimeManager().delta_second, 3, 1, 1)
+        
+        glRotatef(pi * TimeManager().delta_second, 1, 1, 0)
+        
         view_loc = glGetUniformLocation(self._shader_program, 'view')
         view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
-        print(view_matrix)
         glUniformMatrix4fv(view_loc, 1, GL_FALSE, view_matrix)
         
         proj_loc = glGetUniformLocation(self._shader_program, 'proj')
         proj_matrix = glGetFloatv(GL_PROJECTION_MATRIX)
         glUniformMatrix4fv(proj_loc, 1, GL_FALSE, proj_matrix)
 
-        cube = MeshManager.Factory.line_box(0.5)
-        cube.draw(self._shader_program)
+        for mesh_comp in self._mesh_components:
+            mesh_comp.draw(self._shader_program)
+        
         pygame.display.flip()
 
     @property

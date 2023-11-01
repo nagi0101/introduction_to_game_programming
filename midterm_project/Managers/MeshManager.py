@@ -1,5 +1,3 @@
-import numpy as np
-
 from OpenGL.GL import *
 
 from Utils.Singleton import Singleton
@@ -11,7 +9,7 @@ from Components.MeshComponent import MeshComponent, Vertex
 class MeshManager(metaclass=Singleton):
     class Factory(metaclass=Singleton):
         @classmethod
-        def line_box(self, scale:float = 1.0) -> MeshComponent:
+        def box(self, scale:float = 1.0) -> MeshComponent:
             vertices= [
                 # Up
                 Vertex(position=Vec3(1, 1, 1) * scale, color=Vec3(1.0, 0.0, 0.0)),

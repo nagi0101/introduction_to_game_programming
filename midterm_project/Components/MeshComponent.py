@@ -7,13 +7,13 @@ else:
     OpenGL.ERROR_LOGGING = False
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 import numpy as np
 
-
 from Components.BaseComponents import BaseComponents
+from Managers.RenderManager import RenderManager
 
 from Utils.Vector import Vec3, Vec2
+
 
 class Vertex:
     position:Vec3
@@ -43,10 +43,10 @@ class MeshComponent(BaseComponents):
         self._color_buffer = glGenBuffers(1)
         self._normal_buffer = glGenBuffers(1)
         self._indices_buffer = glGenBuffers(1)
-    
-    def draw(self, program) -> None:
-        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
         
+        RenderManager().append_mesh(self)
+    
+    def draw(self, program) -> None:       
         position_np = np.array([vertex.position._data for vertex in self._vertices], np.float32)
         position_data = position_np.flatten()
         glBindBuffer(GL_ARRAY_BUFFER, self._position_buffer)
