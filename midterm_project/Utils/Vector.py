@@ -39,7 +39,7 @@ class Vec2:
             return Vec2(self.x * other.x, self.y * other.y)
 
 class Vec3:
-    def __init__(self, x=0, y=0, z=0):
+    def __init__(self, x:int|float=0, y:int|float=0, z:int|float=0):
         data = np.array((x, y, z), np.float32)
         self._data = np.array((x, y, z), np.float32)
     

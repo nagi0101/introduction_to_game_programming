@@ -14,40 +14,40 @@ class MeshManager(metaclass=Singleton):
         def line_box(self, scale:float = 1.0) -> MeshComponent:
             vertices= [
                 # Up
-                Vertex(position=Vec3(1, 1, 1) * scale),
-                Vertex(position=Vec3(1, 1, -1) * scale),
-                Vertex(position=Vec3(-1, 1, -1) * scale),
-                Vertex(position=Vec3(-1, 1, 1) * scale),
+                Vertex(position=Vec3(1, 1, 1) * scale, color=Vec3(1.0, 0.0, 0.0)),
+                Vertex(position=Vec3(1, 1, -1) * scale, color=Vec3(1.0, 0.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, -1) * scale, color=Vec3(1.0, 0.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, 1) * scale, color=Vec3(1.0, 0.0, 0.0)),
 
                 #Down
-                Vertex(position=Vec3(-1, -1, -1) * scale),
-                Vertex(position=Vec3(1, -1, -1) * scale),
-                Vertex(position=Vec3(1, -1, 1) * scale),
-                Vertex(position=Vec3(-1, -1, 1) * scale),
+                Vertex(position=Vec3(-1, -1, -1) * scale, color=Vec3(0.0, 1.0, 0.0)),
+                Vertex(position=Vec3(1, -1, -1) * scale, color=Vec3(0.0, 1.0, 0.0)),
+                Vertex(position=Vec3(1, -1, 1) * scale, color=Vec3(0.0, 1.0, 0.0)),
+                Vertex(position=Vec3(-1, -1, 1) * scale, color=Vec3(0.0, 1.0, 0.0)),
 
                 #Front
-                Vertex(position=Vec3(-1, 1, 1) * scale),
-                Vertex(position=Vec3(-1, -1, 1) * scale),
-                Vertex(position=Vec3(1, -1, 1) * scale),
-                Vertex(position=Vec3(1, 1, 1) * scale),
-                
+                Vertex(position=Vec3(-1, 1, 1) * scale, color=Vec3(0.0, 0.0, 1.0)),
+                Vertex(position=Vec3(-1, -1, 1) * scale, color=Vec3(0.0, 0.0, 1.0)),
+                Vertex(position=Vec3(1, -1, 1) * scale, color=Vec3(0.0, 0.0, 1.0)),
+                Vertex(position=Vec3(1, 1, 1) * scale, color=Vec3(0.0, 0.0, 1.0)),
+
                 #Back
-                Vertex(position=Vec3(1, -1, -1) * scale),
-                Vertex(position=Vec3(1, 1, -1) * scale),
-                Vertex(position=Vec3(-1, 1, -1) * scale),
-                Vertex(position=Vec3(-1, -1, -1) * scale),
+                Vertex(position=Vec3(1, -1, -1) * scale, color=Vec3(1.0, 1.0, 0.0)),
+                Vertex(position=Vec3(-1, -1, -1) * scale, color=Vec3(1.0, 1.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, -1) * scale, color=Vec3(1.0, 1.0, 0.0)),
+                Vertex(position=Vec3(1, 1, -1) * scale, color=Vec3(1.0, 1.0, 0.0)),
 
                 #Right
-                Vertex(position=Vec3(1, 1, 1) * scale),
-                Vertex(position=Vec3(1, -1, 1) * scale),
-                Vertex(position=Vec3(1, -1, -1) * scale),
-                Vertex(position=Vec3(1, 1, -1) * scale),
-                
+                Vertex(position=Vec3(1, 1, 1) * scale, color=Vec3(1.0, 0.0, 1.0)),
+                Vertex(position=Vec3(1, -1, 1) * scale, color=Vec3(1.0, 0.0, 1.0)),
+                Vertex(position=Vec3(1, -1, -1) * scale, color=Vec3(1.0, 0.0, 1.0)),
+                Vertex(position=Vec3(1, 1, -1) * scale, color=Vec3(1.0, 0.0, 1.0)),
+
                 #Left
-                Vertex(position=Vec3(-1, 1, -1) * scale),
-                Vertex(position=Vec3(-1, -1, -1) * scale),
-                Vertex(position=Vec3(-1, -1, 1) * scale),
-                Vertex(position=Vec3(-1, 1, 1) * scale),
+                Vertex(position=Vec3(-1, 1, -1) * scale, color=Vec3(0.0, 1.0, 1.0)),
+                Vertex(position=Vec3(-1, -1, -1) * scale, color=Vec3(0.0, 1.0, 1.0)),
+                Vertex(position=Vec3(-1, -1, 1) * scale, color=Vec3(0.0, 1.0, 1.0)),
+                Vertex(position=Vec3(-1, 1, 1) * scale, color=Vec3(0.0, 1.0, 1.0)),
             ]
             indices = (
                 0, 1, 2, 0, 2, 3,

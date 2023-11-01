@@ -22,21 +22,30 @@ class RenderManager(metaclass=Singleton):
     
     # Shader source
     _vertex_shader_source = b"""
-    #version 130
+    #version 330
     uniform mat4 view;
     uniform mat4 proj;
-    in vec3 position;
+    
+    layout(location = 0) in vec3 position;
+    layout(location = 1) in vec3 color;
+    
+    out vec4 vColorOut;
+    
     void main()
     {
         gl_Position = proj * view * vec4(position, 1.0);
+        vColorOut = vec4(color, 1.0);
     }
     """
     _fragment_shader_source = b"""
-    #version 130
+    #version 330
+    in vec4 vColorOut;
+    
     out vec4 FragColor;
+    
     void main()
     {
-        FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        FragColor = vColorOut;
     }
     """
     def __init__(self, game) -> None:
@@ -68,6 +77,7 @@ class RenderManager(metaclass=Singleton):
         glRotatef(pi * TimeManager().delta_second, 3, 1, 1)
         view_loc = glGetUniformLocation(self._shader_program, 'view')
         view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
+        print(view_matrix)
         glUniformMatrix4fv(view_loc, 1, GL_FALSE, view_matrix)
         
         proj_loc = glGetUniformLocation(self._shader_program, 'proj')
