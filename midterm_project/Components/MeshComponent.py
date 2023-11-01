@@ -48,24 +48,19 @@ class MeshComponent(BaseComponents):
         glBindVertexArray(self._vbo_id)
     
     def draw(self, program) -> None:
-        glUseProgram(program)
-        
-        position_data = np.array([vertex.position._data for vertex in self._vertices], np.float32).flatten()
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
+        position_np = np.array([vertex.position._data for vertex in self._vertices], np.float32)
+        position_data = position_np.flatten()
         glBindBuffer(GL_ARRAY_BUFFER, self._position_buffer)
         glBufferData(GL_ARRAY_BUFFER, position_data.nbytes, position_data, GL_STATIC_DRAW)
-        
-        indices_data = self._indices.flatten()
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self._indices_buffer)
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_data.nbytes, indices_data, GL_STATIC_DRAW)
         
         position = glGetAttribLocation(program, 'position')
         glEnableVertexAttribArray(position)
         glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 4, ctypes.c_void_p(0))
         
-        glDrawElements(self._primitive_type, len(indices_data), GL_UNSIGNED_INT, None)
+        indices_data = self._indices.flatten()
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self._indices_buffer)
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_data.nbytes, indices_data, GL_STATIC_DRAW)
         
-        # glBegin(self._primitive_type)
-        # for edge in self._edges:
-        #     for vertex in edge:
-        #         glVertex3fv(self._vertices[vertex])
-        # glEnd()
+        glDrawElements(self._primitive_type, len(indices_data), GL_UNSIGNED_INT, None)
+

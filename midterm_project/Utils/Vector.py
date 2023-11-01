@@ -18,7 +18,7 @@ class Vec2:
     @property
     def y(self) -> np.float32:
         return float(self._data[1])
-    @x.setter
+    @y.setter
     def y(self, y:float):
         self._data[1] = y
     
@@ -38,10 +38,25 @@ class Vec2:
         elif(type(other)==Vec2):
             return Vec2(self.x * other.x, self.y * other.y)
 
-class Vec3(Vec2):
+class Vec3:
     def __init__(self, x=0, y=0, z=0):
+        data = np.array((x, y, z), np.float32)
         self._data = np.array((x, y, z), np.float32)
-        
+    
+    @property
+    def x(self) -> np.float32:
+        return float(self._data[0])
+    @x.setter
+    def x(self, x:float):
+        self._data[0] = x
+    
+    @property
+    def y(self) -> np.float32:
+        return float(self._data[1])
+    @y.setter
+    def y(self, y:float):
+        self._data[1] = y
+
     @property
     def z(self) -> np.float32:
         return float(self._data[2])
@@ -61,7 +76,7 @@ class Vec3(Vec2):
     
     def __mul__(self, other:Union[int|float, "Vec3"]) -> "Vec3":        
         if(type(other)==int or type(other)==float):
-            return Vec3(self.x * other, self.y * other, self.z * other)
+            return self * Vec3.from_scalar(other)
         elif(type(other)==Vec3):
             return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
 

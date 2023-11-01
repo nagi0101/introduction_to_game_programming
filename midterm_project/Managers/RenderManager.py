@@ -1,3 +1,5 @@
+from math import pi
+
 import pygame
 import OpenGL
 if __debug__:
@@ -22,10 +24,11 @@ class RenderManager(metaclass=Singleton):
     _vertex_shader_source = b"""
     #version 130
     uniform mat4 view;
+    uniform mat4 proj;
     in vec3 position;
     void main()
     {
-        gl_Position = view * vec4(position, 1.0);
+        gl_Position = proj * view * vec4(position, 1.0);
     }
     """
     _fragment_shader_source = b"""
@@ -41,7 +44,7 @@ class RenderManager(metaclass=Singleton):
         display = (800, 600)
         self._screen = pygame.display.set_mode(display, pygame.DOUBLEBUF|pygame.OPENGL)
         gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-        glTranslatef(0.0, 0.0, -5)
+        glTranslatef(0.0, 0.0, -5.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertex_shader, self._vertex_shader_source)
@@ -56,14 +59,22 @@ class RenderManager(metaclass=Singleton):
         glAttachShader(self._shader_program, fragment_shader)
         glLinkProgram(self._shader_program)
 
+    def normalize(self, a):
+        return a / np.linalg.norm(a)
+    
     def draw(self) -> None:
+        glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        glRotatef(1 * TimeManager().delta_second, 3, 1, 1)
+        glRotatef(pi * TimeManager().delta_second, 3, 1, 1)
         view_loc = glGetUniformLocation(self._shader_program, 'view')
-        view_matrix = glGetFloatv(GL_PROJECTION_MATRIX).T
+        view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
         glUniformMatrix4fv(view_loc, 1, GL_FALSE, view_matrix)
         
-        cube = MeshManager.Factory.line_box(0.1)
+        proj_loc = glGetUniformLocation(self._shader_program, 'proj')
+        proj_matrix = glGetFloatv(GL_PROJECTION_MATRIX)
+        glUniformMatrix4fv(proj_loc, 1, GL_FALSE, proj_matrix)
+
+        cube = MeshManager.Factory.line_box(0.5)
         cube.draw(self._shader_program)
         pygame.display.flip()
 
