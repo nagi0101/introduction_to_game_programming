@@ -3,8 +3,10 @@ import sys
 from typing import List 
 
 from Utils.Singleton import Singleton
-from GameObject import GameObject
-from Player import Player
+
+from GameObjects.GameObject import GameObject
+from GameObjects.Player import Player
+from GameObjects.Map import Map
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
@@ -28,13 +30,14 @@ class Game(metaclass=Singleton):
         RenderManager(self)
         
         self.append_game_object(Player())
+        self.append_game_object(Map())
 
     def run(self):
         while not self.done:
             EventManager().consume_events()
             
             for object in self.game_objects:
-                object.tick(TimeManager().delta_second)
+                object.update(TimeManager().delta_second)
             
             RenderManager().draw()
         

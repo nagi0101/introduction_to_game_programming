@@ -1,7 +1,6 @@
 import pygame
 
 from Components.BaseComponents import BaseComponents
-from GameObject import GameObject
 
 from Utils.Vector import Vec3
 
@@ -12,7 +11,7 @@ class MovementComponent(BaseComponents):
         super().__init__()
         self.speed = speed
         
-    def tick(self, deltatime:float):
+    def update(self, deltatime:float):
         dx, dy = 0, 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -28,4 +27,4 @@ class MovementComponent(BaseComponents):
         v = Vec3(dx, dy, 0)
         self.owner_object.transform.translate += v * deltatime
         
-        super().tick(deltatime)
+        super().update(deltatime)

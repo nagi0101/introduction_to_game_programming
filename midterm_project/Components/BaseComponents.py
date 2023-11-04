@@ -1,15 +1,16 @@
-from typing import List
+from typing import TYPE_CHECKING, List
 
-from GameObject import GameObject
+if TYPE_CHECKING:
+    from GameObjects.GameObject import GameObject
 
 class BaseComponents:
     parent:"BaseComponents" = None
     children:List["BaseComponents"] = []
-    owner_object:GameObject = None
+    owner_object:"GameObject" = None
     
-    def tick(self, deltatime):
+    def update(self, deltatime):
         for child in self.children:
-            child.tick(deltatime)
+            child.update(deltatime)
     
     def append_child(self, child:"BaseComponents"):
         child.parent = self

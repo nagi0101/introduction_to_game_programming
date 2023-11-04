@@ -13,6 +13,7 @@ from Components.BaseComponents import BaseComponents
 from Managers.RenderManager import RenderManager
 
 from Utils.Vector import Vec3, Vec2
+from Utils.Transform import Transform
 
 
 class Vertex:
@@ -32,9 +33,11 @@ class MeshComponent(BaseComponents):
     _vertices: List[Vertex]
     _indices: np.ndarray
     _primitive_type: Constant
+    transform: Transform
 
-    def __init__(self, vertices:List[Vertex], indices:List[int], primitive_type = GL_TRIANGLES) -> None:
+    def __init__(self, transform:Transform=Transform(), vertices:List[Vertex] = [], indices:List[int] = [], primitive_type:Constant = GL_TRIANGLES) -> None:
         super().__init__()
+        self.transform = transform
         self._vertices = vertices
         self._indices = np.array(indices, np.uint32)
         self._primitive_type = primitive_type

@@ -79,7 +79,7 @@ class RenderManager(metaclass=Singleton):
         glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
-        glRotatef(pi * TimeManager().delta_second, 1, 1, 0)
+        glRotatef(pi * TimeManager().delta_second, 0, 1, 0)
         
         view_loc = glGetUniformLocation(self._shader_program, 'view')
         view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
