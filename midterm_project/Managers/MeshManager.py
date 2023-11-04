@@ -63,13 +63,15 @@ class MeshManager(metaclass=Singleton):
         @classmethod
         def from_map(cls, map) -> List[MeshComponent]:
             mesh_arr = []
+            zmax = len(map)
+            xmax = len(map[0])
             for idx_z, z in enumerate(map):
                 for idx_x, x in enumerate(z):
                     if x == 0:
                         pass
                     elif x == 1:
                         transform = Transform(
-                            translate=Vec3(idx_x, 0, idx_z), 
+                            translate=Vec3(idx_x - xmax / 2, 0, idx_z - zmax / 2), 
                             scale=Vec3.from_scalar(0.5)
                             )
                         mesh_arr.append(cls.box(transform))

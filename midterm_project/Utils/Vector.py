@@ -44,21 +44,21 @@ class Vec3:
         self._data = np.array((x, y, z), np.float32)
     
     @property
-    def x(self) -> np.float32:
+    def x(self) -> float:
         return float(self._data[0])
     @x.setter
     def x(self, x:float):
         self._data[0] = x
     
     @property
-    def y(self) -> np.float32:
+    def y(self) -> float:
         return float(self._data[1])
     @y.setter
     def y(self, y:float):
         self._data[1] = y
 
     @property
-    def z(self) -> np.float32:
+    def z(self) -> float:
         return float(self._data[2])
     @z.setter
     def z(self, z:float):

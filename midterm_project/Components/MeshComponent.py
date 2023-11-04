@@ -50,6 +50,10 @@ class MeshComponent(BaseComponents):
         RenderManager().append_mesh(self)
     
     def draw(self, program) -> None:       
+        model_loc = glGetUniformLocation(program, 'model')
+        model_matrix = self.transform.transform_matrix()
+        glUniformMatrix4fv(model_loc, 1, GL_FALSE, model_matrix)
+        
         position_np = np.array([vertex.position._data for vertex in self._vertices], np.float32)
         position_data = position_np.flatten()
         glBindBuffer(GL_ARRAY_BUFFER, self._position_buffer)

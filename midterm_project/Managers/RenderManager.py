@@ -21,6 +21,7 @@ class RenderManager(metaclass=Singleton):
     # Shader source
     _vertex_shader_source = b"""
     #version 330
+    uniform mat4 model;
     uniform mat4 view;
     uniform mat4 proj;
     
@@ -31,7 +32,7 @@ class RenderManager(metaclass=Singleton):
     
     void main()
     {
-        gl_Position = proj * view * vec4(position, 1.0);
+        gl_Position = proj * view * model * vec4(position, 1.0);
         vColorOut = vec4(color, 1.0);
     }
     """
@@ -51,7 +52,8 @@ class RenderManager(metaclass=Singleton):
         display = (800, 600)
         self._screen = pygame.display.set_mode(display, pygame.DOUBLEBUF|pygame.OPENGL)
         gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-        glTranslatef(0.0, 0.0, -5.0)
+        glRotatef(0.5 * pi, 1, 0, 0)
+        glTranslatef(0.0, -10.0, 0.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertex_shader, self._vertex_shader_source)
@@ -79,7 +81,7 @@ class RenderManager(metaclass=Singleton):
         glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
-        glRotatef(pi * TimeManager().delta_second, 0, 1, 0)
+        
         
         view_loc = glGetUniformLocation(self._shader_program, 'view')
         view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
