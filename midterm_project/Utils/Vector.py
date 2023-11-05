@@ -43,6 +43,28 @@ class Vec3:
         data = np.array((x, y, z), np.float32)
         self._data = np.array((x, y, z), np.float32)
     
+    def translate_matrix(self) -> np.ndarray:
+        x = self.x
+        y = self.y
+        z = self.z
+        return np.array((
+            (1, 0, 0, 0),
+            (0, 1, 0, 0),
+            (0, 0, 1, 0),
+            (x, y, z, 1),
+        ), np.float32)
+
+    def scale_matrix(self) -> np.ndarray:
+        x = self.x
+        y = self.y
+        z = self.z
+        return np.array((
+            (x, 0, 0, 0),
+            (0, y, 0, 0),
+            (0, 0, z, 0),
+            (0, 0, 0, 1),
+        ), np.float32)
+    
     @property
     def x(self) -> float:
         return float(self._data[0])
@@ -79,4 +101,3 @@ class Vec3:
             return self * Vec3.from_scalar(other)
         elif(type(other)==Vec3):
             return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
-

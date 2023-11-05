@@ -16,30 +16,7 @@ class Transform:
         self.scale = scale
 
     def rotation_matrix(self) -> np.ndarray:
-        euler = self.rotate
-        roll = euler.roll
-        pitch = euler.pitch
-        yaw = euler.yaw
-        pitch_matrix = np.array((
-            (1,         0,          0, 0),
-            (0, cos(pitch), -sin(pitch), 0),
-            (0, sin(pitch),  cos(pitch), 0),
-            (0,         0,          0, 1)
-        ), np.float32)
-        yaw_matrix = np.array((
-            ( cos(yaw), 0, sin(yaw), 0),
-            (          0, 1,          0, 0),
-            (-sin(yaw), 0, cos(yaw), 0),
-            (          0, 0,          0, 1)
-        ), np.float32)
-        roll_matrix = np.array((
-            (cos(roll), -sin(roll), 0, 0),
-            (sin(roll),  cos(roll), 0, 0),
-            (       0,         0, 1, 0),
-            (       0,         0, 0, 1)
-        ), np.float32)
-
-        return np.transpose(np.matmul(yaw_matrix, np.matmul(pitch_matrix, roll_matrix)))
+        return self.rotate.rotation_matrix()
 
     def translate_matrix(self) -> np.ndarray:
         translate = self.translate
@@ -71,4 +48,5 @@ class Transform:
         translate = self.translate_matrix()
         return np.matmul(np.matmul(scale, rotation), translate)
 
-        
+    def get_forward_vector(self) -> Vec3:
+        return self.rotate.rotate_vec3(Vec3(0, 0, -1))

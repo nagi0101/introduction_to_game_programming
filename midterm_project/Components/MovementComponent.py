@@ -12,19 +12,19 @@ class MovementComponent(BaseComponents):
         self.speed = speed
         
     def update(self, deltatime:float):
-        dx, dy = 0, 0
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            dx += -self.speed
-        elif keys[pygame.K_RIGHT]:
-            dx += self.speed
+        # dx, dy = 0, 0
+        # keys = pygame.key.get_pressed()
+        # if keys[pygame.K_LEFT]:
+        #     dx += -self.speed
+        # elif keys[pygame.K_RIGHT]:
+        #     dx += self.speed
         
-        if keys[pygame.K_UP]:
-            dy += -self.speed
-        elif keys[pygame.K_DOWN]:
-            dy += self.speed
+        # if keys[pygame.K_UP]:
+        #     dy += -self.speed
+        # elif keys[pygame.K_DOWN]:
+        #     dy += self.speed
         
-        v = Vec3(dx, dy, 0)
-        self.owner_object.transform.translate += v * deltatime
+        # v = Vec3(dx, dy, 0)
+        # self.owner_object.transform.translate += v * deltatime
         
         super().update(deltatime)

@@ -28,7 +28,7 @@ class BaseComponents:
     def get_world_transform_matrix(self) -> np.ndarray:
         return self.parent.get_absolute_transform_matrix()
     
-    def get_local_transform_matrix(self) -> np.ndarray:
+    def get_model_transform_matrix(self) -> np.ndarray:
         return self.transform.transform_matrix()
 
     def get_absolute_transform_matrix(self) -> np.ndarray:

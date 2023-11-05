@@ -29,7 +29,8 @@ class Game(metaclass=Singleton):
 
         RenderManager(self)
         
-        self.append_game_object(Player())
+        self.player=Player()
+        self.append_game_object(self.player)
         self.append_game_object(Map())
 
     def run(self):

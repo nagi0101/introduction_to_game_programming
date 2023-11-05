@@ -1,4 +1,8 @@
-from math import pi
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    from Game import Game
+    from Components.MeshComponent import MeshComponent
 
 import pygame
 import OpenGL
@@ -13,10 +17,12 @@ from Utils.Singleton import Singleton
 
 from Managers.TimeManager import TimeManager
 
+from Components.CameraComponent import CameraComponent
+
 class RenderManager(metaclass=Singleton):
-    _game=None
+    _game:"Game"
     _screen:pygame.Surface
-    _mesh_components=[]
+    _mesh_components:List["MeshComponent"]=[]
     
     # Shader source
     _vertex_shader_source = b"""
@@ -70,7 +76,7 @@ class RenderManager(metaclass=Singleton):
         glEnable(GL_DEPTH_TEST)
         glDepthMask(GL_TRUE)
         
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 
     def append_mesh(self, mesh_component):
         self._mesh_components.append(mesh_component)
@@ -80,11 +86,11 @@ class RenderManager(metaclass=Singleton):
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
         view_loc = glGetUniformLocation(self._shader_program, 'view')
-        view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
+        view_matrix = self._game.player.camera.get_view_matrix()
         glUniformMatrix4fv(view_loc, 1, GL_FALSE, view_matrix)
         
         proj_loc = glGetUniformLocation(self._shader_program, 'proj')
-        proj_matrix = glGetFloatv(GL_PROJECTION_MATRIX)
+        proj_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
         glUniformMatrix4fv(proj_loc, 1, GL_FALSE, proj_matrix)
 
         for mesh_comp in self._mesh_components:
