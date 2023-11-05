@@ -23,8 +23,8 @@ from Utils.Rotator import Rot3
 from Utils.Transform import Transform
 
 class Player(GameObject):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, transform:Transform=Transform()) -> None:
+        super().__init__(transform)
         self.camera = CameraComponent()
         self.add_component(self.camera)
         self.add_component(MovementComponent(speed=5.0))

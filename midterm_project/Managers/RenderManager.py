@@ -33,24 +33,31 @@ class RenderManager(metaclass=Singleton):
     
     layout(location = 0) in vec3 position;
     layout(location = 1) in vec3 color;
+    in vec2 texCoords;
     
     out vec4 vColorOut;
+    out vec2 vTexCoordOut;
     
     void main()
     {
         gl_Position = proj * view * model * vec4(position, 1.0);
         vColorOut = vec4(color, 1.0);
+        vTexCoordOut = texCoords;
     }
     """
     _fragment_shader_source = b"""
     #version 330
     in vec4 vColorOut;
+    in vec2 vTexCoordOut;
+    
+    uniform sampler2D sampler;
     
     out vec4 FragColor;
     
     void main()
     {
-        FragColor = vColorOut;
+        FragColor = texture(sampler, vTexCoordOut);
+        // FragColor = vColorOut;
     }
     """
     def __init__(self, game) -> None:
@@ -74,6 +81,7 @@ class RenderManager(metaclass=Singleton):
         
         glEnable(GL_CULL_FACE)
         glEnable(GL_DEPTH_TEST)
+        glEnable(GL_TEXTURE_2D)
         glDepthMask(GL_TRUE)
         
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)

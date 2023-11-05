@@ -13,10 +13,10 @@ class GameObject:
     transform: "Transform"
     game: "Game"
 
-    def __init__(self) -> None:
+    def __init__(self, transform:Transform=Transform()) -> None:
         self.components = []
         self.game = None
-        self.transform = Transform()
+        self.transform = transform
 
     def add_component(self, component):
         self.components.append(component)

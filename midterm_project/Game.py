@@ -3,6 +3,9 @@ import sys
 from typing import List 
 
 from Utils.Singleton import Singleton
+from Utils.Transform import Transform
+from Utils.Vector import Vec3
+from Utils.Rotator import Rot3
 
 from GameObjects.GameObject import GameObject
 from GameObjects.Player import Player
@@ -29,7 +32,10 @@ class Game(metaclass=Singleton):
 
         RenderManager(self)
         
-        self.player=Player()
+        self.player=Player(transform=Transform(
+            translate=Vec3(1, 0, 1),
+            rotate=Rot3(0, 0, -2)
+        ))
         self.append_game_object(self.player)
         self.append_game_object(Map())
 
