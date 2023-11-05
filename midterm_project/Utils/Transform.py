@@ -69,6 +69,6 @@ class Transform:
         scale = self.scale_matrix()
         rotation = self.rotation_matrix()
         translate = self.translate_matrix()
-        return np.matmul(translate, np.matmul(rotation, scale))
+        return np.matmul(np.matmul(scale, rotation), translate)
 
         

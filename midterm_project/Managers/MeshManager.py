@@ -4,6 +4,7 @@ from OpenGL.GL import *
 
 from Utils.Singleton import Singleton
 from Utils.Vector import Vec3
+from Utils.Rotator import Rot3
 from Utils.Transform import Transform
 
 from Components.MeshComponent import MeshComponent, Vertex
@@ -71,8 +72,9 @@ class MeshManager(metaclass=Singleton):
                         pass
                     elif x == 1:
                         transform = Transform(
-                            translate=Vec3(idx_x - xmax / 2, 0, idx_z - zmax / 2), 
-                            scale=Vec3.from_scalar(0.5)
+                            translate=Vec3(idx_x - (xmax / 2), 0, idx_z - (zmax / 2)), 
+                            scale=Vec3.from_scalar(0.5),
+                            rotate=Rot3()
                             )
                         mesh_arr.append(cls.box(transform))
             return mesh_arr

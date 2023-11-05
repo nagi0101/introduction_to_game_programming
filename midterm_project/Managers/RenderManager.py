@@ -52,8 +52,6 @@ class RenderManager(metaclass=Singleton):
         display = (800, 600)
         self._screen = pygame.display.set_mode(display, pygame.DOUBLEBUF|pygame.OPENGL)
         gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-        glRotatef(0.5 * pi, 1, 0, 0)
-        glTranslatef(0.0, -10.0, 0.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertex_shader, self._vertex_shader_source)
@@ -72,7 +70,7 @@ class RenderManager(metaclass=Singleton):
         glEnable(GL_DEPTH_TEST)
         glDepthMask(GL_TRUE)
         
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     def append_mesh(self, mesh_component):
         self._mesh_components.append(mesh_component)
@@ -80,8 +78,6 @@ class RenderManager(metaclass=Singleton):
     def draw(self) -> None:
         glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        
-        
         
         view_loc = glGetUniformLocation(self._shader_program, 'view')
         view_matrix = glGetFloatv(GL_MODELVIEW_MATRIX)
