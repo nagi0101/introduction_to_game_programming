@@ -2,8 +2,6 @@ from typing import TYPE_CHECKING, List
 
 from Utils.Transform import Transform
 
-from Managers.TimeManager import TimeManager
-
 if TYPE_CHECKING:
     from Components.BaseComponents import BaseComponents
     from Game import Game

@@ -3,8 +3,6 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from Components.MeshComponent import MeshComponent
 
-import numpy as np
-
 from GameObjects.GameObject import GameObject
 from Utils.Transform import Transform
 
