@@ -85,6 +85,9 @@ class RenderManager(metaclass=Singleton):
     def append_mesh(self, mesh_component):
         self._mesh_components.append(mesh_component)
     
+    def remove_mesh(self, mesh_component):
+        self._mesh_components.remove(mesh_component)
+    
     def draw(self) -> None:
         glUseProgram(self._shader_program)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)

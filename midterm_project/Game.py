@@ -1,6 +1,6 @@
 import pygame
 import sys
-from typing import List 
+from typing import List
 
 from Utils.Singleton import Singleton
 from Utils.Transform import Transform
@@ -16,6 +16,8 @@ from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
 from Managers.RenderManager import RenderManager
 
+from Components.MeshComponent import MeshComponent
+    
 class Game(metaclass=Singleton):
     done = False
     game_objects:List[GameObject] = []
@@ -41,7 +43,7 @@ class Game(metaclass=Singleton):
         self.append_game_object(CollidableBox(transform=Transform(
             translate=Vec3(2.5, 0, 2.5),
             scale=Vec3.from_scalar(0.2)
-        )))
+        ), threshold=0.2))
         self.append_game_object(self.player)
         self.map = Map()
         self.append_game_object(self.map)
@@ -65,7 +67,12 @@ class Game(metaclass=Singleton):
         pygame.quit()
         sys.exit()
 
-    def append_game_object(self, object):
+    def append_game_object(self, object:GameObject):
         self.game_objects.append(object)
         object.game = self
 
+    def remove_game_object(self, object:GameObject):
+        for component in object.components:
+            if isinstance(component, MeshComponent):
+                RenderManager().remove_mesh(component)
+        self.game_objects.remove(object)

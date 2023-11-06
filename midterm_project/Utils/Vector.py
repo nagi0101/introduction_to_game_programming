@@ -85,6 +85,10 @@ class Vec3:
     @z.setter
     def z(self, z:float):
         self._data[2] = z
+
+    @property
+    def norm(self)->float:
+        return np.linalg.norm(self._data)
     
     @classmethod
     def from_scalar(cls, scalar:float) -> "Vec3":
