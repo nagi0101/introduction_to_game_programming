@@ -93,6 +93,9 @@ class Vec3:
     def __neg__(self) -> "Vec3":
         return Vec3(-self.x, -self.y, -self.z)
     
+    def __sub__(self, other) -> "Vec3":
+        return self + (-other)
+    
     def __add__(self, other:"Vec3") -> "Vec3":
         return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
     

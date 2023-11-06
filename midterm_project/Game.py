@@ -10,6 +10,7 @@ from Utils.Rotator import Rot3
 from GameObjects.GameObject import GameObject
 from GameObjects.Player import Player
 from GameObjects.Map import Map
+from GameObjects.CollidableBox import CollidableBox
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
@@ -36,6 +37,11 @@ class Game(metaclass=Singleton):
             translate=Vec3(1.5, 0, 1.5),
             rotate=Rot3(0, 0, -2)
         ))
+        
+        self.append_game_object(CollidableBox(transform=Transform(
+            translate=Vec3(2.5, 0, 2.5),
+            scale=Vec3.from_scalar(0.2)
+        )))
         self.append_game_object(self.player)
         self.map = Map()
         self.append_game_object(self.map)
