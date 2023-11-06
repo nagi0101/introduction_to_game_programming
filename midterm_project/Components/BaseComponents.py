@@ -34,4 +34,4 @@ class BaseComponents:
     def get_absolute_transform_matrix(self) -> np.ndarray:
         if self.parent == None:
             return np.matmul(self.transform.transform_matrix(), self.owner_object.transform.transform_matrix())
-        return np.matmul(self.transform.transform_matrix(), self.parent.transform.transform_matrix())
+        return np.matmul(self.transform.transform_matrix(), self.parent.get_absolute_transform_matrix())

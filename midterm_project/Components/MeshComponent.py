@@ -36,13 +36,13 @@ class MeshComponent(BaseComponents):
     _indices: np.ndarray
     _primitive_type: Constant
 
-    def __init__(self, transform:Transform=Transform(), vertices:List[Vertex] = [], indices:List[int] = [], primitive_type:Constant = GL_TRIANGLES, texture_name:str|None=None) -> None:
+    def __init__(self, transform:Transform=Transform(), vertices:List[Vertex] = [], indices:List[int] = [], primitive_type:Constant = GL_TRIANGLES, texture_path:str|None=None) -> None:
         super().__init__(transform)
         self.transform = transform
         self._vertices = vertices
         self._indices = np.array(indices, np.uint32)
         self._primitive_type = primitive_type
-        self._texture_name = texture_name
+        self._texture_path = texture_path
         
         self._position_buffer = glGenBuffers(1)
         self._color_buffer = glGenBuffers(1)
@@ -54,13 +54,13 @@ class MeshComponent(BaseComponents):
     
     def draw(self, program) -> None:
         model_loc = glGetUniformLocation(program, 'model')
-        model_matrix = self.get_model_transform_matrix()
+        model_matrix = self.get_absolute_transform_matrix()
         glUniformMatrix4fv(model_loc, 1, GL_FALSE, model_matrix)
         
-        if self._texture_name:
+        if self._texture_path:
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-            glBindTexture(GL_TEXTURE_2D, TextureManager().add_or_get(self._texture_name).buffer_id)
+            glBindTexture(GL_TEXTURE_2D, TextureManager().add_or_get(self._texture_path).buffer_id)
             
             texcoord_np = np.array([vertex.texcoord._data for vertex in self._vertices], np.float32)
             texcoord_data = texcoord_np.flatten()
