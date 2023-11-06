@@ -15,10 +15,6 @@ from OpenGL.GLU import *
 
 from Utils.Singleton import Singleton
 
-from Managers.TimeManager import TimeManager
-
-from Components.CameraComponent import CameraComponent
-
 class RenderManager(metaclass=Singleton):
     _game:"Game"
     _screen:pygame.Surface
@@ -64,7 +60,7 @@ class RenderManager(metaclass=Singleton):
         self._game = game
         display = (800, 600)
         self._screen = pygame.display.set_mode(display, pygame.DOUBLEBUF|pygame.OPENGL)
-        gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+        gluPerspective(45, (display[0]/display[1]), 0.001, 50.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertex_shader, self._vertex_shader_source)

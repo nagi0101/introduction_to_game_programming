@@ -33,11 +33,12 @@ class Game(metaclass=Singleton):
         RenderManager(self)
         
         self.player=Player(transform=Transform(
-            translate=Vec3(1, 0, 1),
+            translate=Vec3(1.5, 0, 1.5),
             rotate=Rot3(0, 0, -2)
         ))
         self.append_game_object(self.player)
-        self.append_game_object(Map())
+        self.map = Map()
+        self.append_game_object(self.map)
 
     def run(self):
         while not self.done:

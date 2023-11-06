@@ -71,7 +71,7 @@ class MeshManager(metaclass=Singleton):
                         pass
                     elif x == 1:
                         transform = Transform(
-                            translate=Vec3(idx_x, 0, idx_z), 
+                            translate=Vec3(idx_x + 0.5, 0, idx_z + 0.5), 
                             scale=Vec3.from_scalar(0.5),
                             rotate=Rot3()
                             )

@@ -9,9 +9,5 @@ class CameraComponent(BaseComponents):
         super().__init__(transform)
     
     def get_view_matrix(self) -> np.ndarray:
-        owner_transform = self.owner_object.transform
-        inv_rotation = (-owner_transform.rotate).rotation_matrix()
-        # inv_rotation = owner_transform.rotation_matrix()
-        inv_translate = (-owner_transform.translate).translate_matrix()
-        # print(inv_translate)
-        return np.matmul(inv_translate, inv_rotation)
+        transform = self.get_absolute_transform_matrix()
+        return np.linalg.inv(transform)
