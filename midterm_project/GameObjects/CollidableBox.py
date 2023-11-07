@@ -27,5 +27,5 @@ class CollidableBox(GameObject):
     
     def on_collide(self):
         print("Collide")
-        self.game.clear = True
+        self.game.clear_game()
         self.game.remove_game_object(self)

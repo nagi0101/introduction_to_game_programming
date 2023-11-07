@@ -53,13 +53,11 @@ class Game(metaclass=Singleton):
 
     def run(self):
         self.start_time = time.time()
+        self.clear_time = 0
         while not self.done:
             EventManager().consume_events()
             if self.clear:
-                clear_time = time.time() - self.start_time
-                RenderManager().draw_gameover(clear_time)
-                print(clear_time)
-
+                RenderManager().draw_gameover(self.clear_time)
                 continue
             
             for object in self.game_objects:
@@ -68,6 +66,10 @@ class Game(metaclass=Singleton):
             RenderManager().draw()
         
         self.exit_game()
+    
+    def clear_game(self):
+        self.clear = True
+        self.clear_time = time.time() - self.start_time
         
     def handle_exit(self, e:pygame.event.Event):
         if(e.type == pygame.QUIT or e.key == pygame.K_q):
