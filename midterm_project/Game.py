@@ -56,10 +56,9 @@ class Game(metaclass=Singleton):
         while not self.done:
             EventManager().consume_events()
             if self.clear:
-                RenderManager().screen.fill((0, 0, 0))
                 clear_time = time.time() - self.start_time
+                RenderManager().draw_gameover(clear_time)
                 print(clear_time)
-                pygame.display.flip()
 
                 continue
             

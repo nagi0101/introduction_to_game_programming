@@ -104,6 +104,21 @@ class RenderManager(metaclass=Singleton):
             mesh_comp.draw(self._shader_program)
         
         pygame.display.flip()
+    
+    def draw_text(self, x, y, text):
+        position = (x, y, 0)
+        font = pygame.font.SysFont ('arial', 64)
+        textSurface = font.render(text, True, (255,255,255,255), (100,100,100,255))
+        textData = pygame.image.tostring(textSurface, "RGBA", True)
+        glRasterPos3d (*position)
+        glDrawPixels (textSurface.get_width (), textSurface.get_height (), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+
+    
+    def draw_gameover(self, clear_time:float) -> None:
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        self._screen.fill((0, 0, 0))
+        self.draw_text(0, 0, str(clear_time))
+        pygame.display.flip()
 
     @property
     def screen(self) -> None:
