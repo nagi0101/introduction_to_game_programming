@@ -1,7 +1,7 @@
 import sys
 import time
 from typing import List
-from random import sample
+from math import pi
 
 import pygame
 
@@ -23,7 +23,6 @@ from Components.MeshComponent import MeshComponent
     
 class Game(metaclass=Singleton):
     done:bool = False
-    clear:bool = False
     game_objects:List[GameObject] = []
 
     def __init__(self):
@@ -44,28 +43,20 @@ class Game(metaclass=Singleton):
 
         self.player=Player(transform=Transform(
             translate=Vec3(1.5, 0, 1.5),
-            rotate=Rot3(0, 0, -2)
+            rotate=Rot3(0, 0, pi)
         ))
         self.append_game_object(self.player)
-
         
-        
-        COLLIDE_NUM = 5
-        empty_positions = sample(self.map.get_empty_pos(), COLLIDE_NUM)
-        for pos in empty_positions:
-            self.append_game_object(CollidableBox(transform=Transform(
-                translate=pos,
+        self.append_game_object(CollidableBox(transform=Transform(
+                translate=Vec3(4.5, 0, 13.5),
                 scale=Vec3.from_scalar(0.5)
-            ), threshold=0.2))
+            ), threshold=0.2, texture_path=".\\Resources\\Textures\\cube01.jpg"))
 
     def run(self):
         self.start_time = time.time()
         self.clear_time = 0
         while not self.done:
             EventManager().consume_events()
-            if self.clear:
-                RenderManager().draw_gameover(self.clear_time)
-                continue
             
             for object in self.game_objects:
                 object.update(TimeManager().delta_second)
@@ -73,10 +64,6 @@ class Game(metaclass=Singleton):
             RenderManager().draw()
         
         self.exit_game()
-    
-    def clear_game(self):
-        self.clear = True
-        self.clear_time = time.time() - self.start_time
         
     def handle_exit(self, e:pygame.event.Event):
         if(e.type == pygame.QUIT or e.key == pygame.K_q):

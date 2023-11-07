@@ -12,6 +12,7 @@ else:
     OpenGL.ERROR_LOGGING = False
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from OpenGL.GLUT import *
 
 from Utils.Singleton import Singleton
 
@@ -59,8 +60,8 @@ class RenderManager(metaclass=Singleton):
     """
     def __init__(self, game) -> None:
         self._game = game
-        display = (800, 600)
-        self._screen = pygame.display.set_mode(display, pygame.DOUBLEBUF|pygame.OPENGL)
+        self._screen = pygame.display.set_mode((0, 0), pygame.DOUBLEBUF|pygame.OPENGL|pygame.FULLSCREEN)
+        display = self._screen.get_size()
         gluPerspective(45, (display[0]/display[1]), 0.001, 50.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
@@ -105,25 +106,12 @@ class RenderManager(metaclass=Singleton):
             mesh_comp.draw(self._shader_program)
         
         pygame.display.flip()
-    
-    def draw_text(self, x, y, text):
-        font = pygame.font.SysFont('arial', 64)                                     
-        textSurface = font.render(text, True, (255, 255, 66, 255), (0, 0, 0, 255))
-        textData = pygame.image.tostring(textSurface, "RGBA", True)
-        glWindowPos2d(x, y)
-        glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
-        
-    def draw_gameover(self, clear_time:float) -> None:
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        self._screen.fill((0, 0, 0))
-        self.draw_text(0, 0, "Clear time: " + str(int(clear_time)))
-        pygame.display.flip()
 
-        @property
-        def screen(self) -> None:
-            return self._screen
-        @screen.setter
-        def screen(self, screen:pygame.Surface):
-            self._screen = screen
+    @property
+    def screen(self) -> None:
+        return self._screen
+    @screen.setter
+    def screen(self, screen:pygame.Surface):
+        self._screen = screen
 
     

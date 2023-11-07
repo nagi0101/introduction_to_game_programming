@@ -66,16 +66,15 @@ class MeshManager(metaclass=Singleton):
             mesh_arr = []
             for idx_z, z in enumerate(map):
                 for idx_x, x in enumerate(z):
-                    texture_path = textures[x - 1]
                     if x == 0:
                         pass
-                    elif x == 1:
+                    else:
                         transform = Transform(
                             translate=Vec3(idx_x + 0.5, 0, idx_z + 0.5), 
                             scale=Vec3.from_scalar(0.5),
                             rotate=Rot3()
                             )
-                        mesh_arr.append(cls.box(transform, texture_path))
+                        mesh_arr.append(cls.box(transform, textures[x - 1], Vec2.from_scalar(4)))
             return mesh_arr
         
         @classmethod
