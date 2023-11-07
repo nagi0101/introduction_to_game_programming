@@ -69,8 +69,6 @@ class MeshComponent(BaseComponents):
             buffer_id = glGetAttribLocation(program, 'texCoords')
             glVertexAttribPointer(buffer_id, 2, GL_FLOAT, GL_FALSE, 0, None)
             glEnableVertexAttribArray(buffer_id)
-            
-
         
         position_np = np.array([vertex.position._data for vertex in self._vertices], np.float32)
         position_data = position_np.flatten()

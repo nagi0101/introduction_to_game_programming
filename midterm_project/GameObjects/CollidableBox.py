@@ -4,7 +4,9 @@ if TYPE_CHECKING:
     from Components.MeshComponent import MeshComponent
 
 from GameObjects.GameObject import GameObject
+
 from Utils.Transform import Transform
+from Utils.Vector import Vec3
 
 from Managers.MeshManager import MeshManager
 
@@ -14,7 +16,9 @@ class CollidableBox(GameObject):
 
     def __init__(self, transform:Transform=Transform(), threshold:float=0.0) -> None:
         super().__init__(transform)
-        self.mesh = MeshManager.Factory.box(transform=transform)
+        self.mesh = MeshManager.Factory.box(transform=Transform(
+            scale=Vec3.from_scalar(0.2)
+        ))
         self.add_component(self.mesh)
         self.threshold = threshold
     

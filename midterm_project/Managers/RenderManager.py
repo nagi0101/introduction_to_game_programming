@@ -52,8 +52,9 @@ class RenderManager(metaclass=Singleton):
     
     void main()
     {
-        FragColor = texture(sampler, vTexCoordOut);
-        // FragColor = vColorOut;
+        vec4 texColor = texture(sampler, vTexCoordOut);
+        float z = clamp(1 - pow(gl_FragCoord.z, 2000), 0.0, 1.0);
+        FragColor = texColor*z;
     }
     """
     def __init__(self, game) -> None:

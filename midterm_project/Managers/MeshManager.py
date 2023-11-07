@@ -13,43 +13,43 @@ from Components.MeshComponent import MeshComponent, Vertex
 class MeshManager(metaclass=Singleton):
     class Factory(metaclass=Singleton):
         @classmethod
-        def box(self, transform:Transform = Transform(), texture_path:str|None=None) -> MeshComponent:
+        def box(self, transform:Transform = Transform(), texture_path:str|None=None, uv_scale:Vec2 = Vec2.from_scalar(1.0)) -> MeshComponent:
             vertices= [
                 # Up
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 0.0)),
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 0.0)),
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 1.0)),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
 
                 #Down
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0)),
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0)),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0)),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
 
                 #Front
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0)),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0)),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
 
                 #Back
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0)),
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0)),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0)),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
 
                 #Right
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0)),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0)),
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0)),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
 
                 #Left
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 0.0)),
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 1.0)),
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
             ]
             indices = (
                 0, 1, 2, 0, 2, 3,
@@ -79,12 +79,12 @@ class MeshManager(metaclass=Singleton):
             return mesh_arr
         
         @classmethod
-        def plane(cls, transform:Transform = Transform(), texture_path:str|None=None) -> MeshComponent:
+        def plane(cls, transform:Transform = Transform(), texture_path:str|None=None, uv_scale:Vec2 = Vec2.from_scalar(1.0)) -> MeshComponent:
             vertices= [
-                Vertex(position=Vec3(-1, 1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0)),
-                Vertex(position=Vec3(-1, -1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0)),
-                Vertex(position=Vec3(1, -1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0)),
-                Vertex(position=Vec3(1, 1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0)),
+                Vertex(position=Vec3(-1, 1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, 0), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
             ]
             indices = (
                 0, 1, 2, 0, 2, 3

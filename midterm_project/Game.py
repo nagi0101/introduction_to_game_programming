@@ -1,6 +1,7 @@
 import sys
 import time
 from typing import List
+from random import sample
 
 import pygame
 
@@ -38,18 +39,22 @@ class Game(metaclass=Singleton):
 
         RenderManager(self)
         
+        self.map = Map()
+        self.append_game_object(self.map)
+
         self.player=Player(transform=Transform(
             translate=Vec3(1.5, 0, 1.5),
             rotate=Rot3(0, 0, -2)
         ))
-        
-        self.append_game_object(CollidableBox(transform=Transform(
-            translate=Vec3(2, 0, 2),
-            scale=Vec3.from_scalar(0.5)
-        ), threshold=0.2))
         self.append_game_object(self.player)
-        self.map = Map()
-        self.append_game_object(self.map)
+        
+        COLLIDE_NUM = 5
+        empty_positions = sample(self.map.get_empty_pos(), COLLIDE_NUM)
+        for pos in empty_positions:
+            self.append_game_object(CollidableBox(transform=Transform(
+                translate=pos,
+                scale=Vec3.from_scalar(0.5)
+            ), threshold=0.2))
 
     def run(self):
         self.start_time = time.time()
