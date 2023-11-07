@@ -47,6 +47,8 @@ class Game(metaclass=Singleton):
             rotate=Rot3(0, 0, -2)
         ))
         self.append_game_object(self.player)
+
+        
         
         COLLIDE_NUM = 5
         empty_positions = sample(self.map.get_empty_pos(), COLLIDE_NUM)

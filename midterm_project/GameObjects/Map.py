@@ -1,9 +1,11 @@
+from math import pi
 from typing import List
 
 from GameObjects.GameObject import GameObject
 
 from Utils.Transform import Transform
-from Utils.Vector import Vec3
+from Utils.Vector import Vec3, Vec2
+from Utils.Rotator import Rot3
 
 from Managers.MeshManager import MeshManager
 
@@ -30,6 +32,24 @@ class Map(GameObject):
         super().__init__(transform)
         for mesh_comp in MeshManager.Factory.from_map(self.map_data, self.textures):
             self.add_component(mesh_comp)
+        self.add_component(MeshManager.Factory.plane(
+            transform=Transform(
+                translate=Vec3(len(self.map_data[0]) / 2, -0.5, len(self.map_data) / 2),
+                rotate=Rot3(pitch=-pi * 0.5),
+                scale=Vec3(len(self.map_data[0]) / 2, len(self.map_data) / 2, 1)
+            ), 
+            texture_path=".\\Resources\\Textures\\floor02.jpg", 
+            uv_scale=Vec2(len(self.map_data[0]), len(self.map_data)))
+        )
+        self.add_component(MeshManager.Factory.plane(
+            transform=Transform(
+                translate=Vec3(len(self.map_data[0]) / 2, 0.5, len(self.map_data) / 2),
+                rotate=Rot3(pitch=pi * 0.5),
+                scale=Vec3(len(self.map_data[0]) / 2, len(self.map_data) / 2, 1)
+            ), 
+            texture_path=".\\Resources\\Textures\\ceiling01.jpg", 
+            uv_scale=Vec2(len(self.map_data[0]), len(self.map_data)))
+        )
 
     def get_empty_pos(self)->List[Vec3]:
         empty_list = []
