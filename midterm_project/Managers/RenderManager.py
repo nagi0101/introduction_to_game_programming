@@ -107,7 +107,7 @@ class RenderManager(metaclass=Singleton):
 
     @property
     def screen(self) -> None:
-        return self.screen
+        return self._screen
     @screen.setter
     def screen(self, screen:pygame.Surface):
         self._screen = screen

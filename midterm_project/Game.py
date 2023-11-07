@@ -1,6 +1,8 @@
-import pygame
 import sys
+import time
 from typing import List
+
+import pygame
 
 from Utils.Singleton import Singleton
 from Utils.Transform import Transform
@@ -19,7 +21,8 @@ from Managers.RenderManager import RenderManager
 from Components.MeshComponent import MeshComponent
     
 class Game(metaclass=Singleton):
-    done = False
+    done:bool = False
+    clear:bool = False
     game_objects:List[GameObject] = []
 
     def __init__(self):
@@ -41,16 +44,24 @@ class Game(metaclass=Singleton):
         ))
         
         self.append_game_object(CollidableBox(transform=Transform(
-            translate=Vec3(2.5, 0, 2.5),
-            scale=Vec3.from_scalar(0.2)
+            translate=Vec3(2, 0, 2),
+            scale=Vec3.from_scalar(0.5)
         ), threshold=0.2))
         self.append_game_object(self.player)
         self.map = Map()
         self.append_game_object(self.map)
 
     def run(self):
+        self.start_time = time.time()
         while not self.done:
             EventManager().consume_events()
+            if self.clear:
+                RenderManager().screen.fill((0, 0, 0))
+                clear_time = time.time() - self.start_time
+                print(clear_time)
+                pygame.display.flip()
+
+                continue
             
             for object in self.game_objects:
                 object.update(TimeManager().delta_second)
