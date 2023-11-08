@@ -60,8 +60,7 @@ class RenderManager(metaclass=Singleton):
     """
     def __init__(self, game) -> None:
         self._game = game
-        # self._screen = pygame.display.set_mode((0, 0), pygame.DOUBLEBUF|pygame.OPENGL|pygame.FULLSCREEN)
-        self._screen = pygame.display.set_mode((480, 320), pygame.DOUBLEBUF|pygame.OPENGL)
+        self._screen = pygame.display.set_mode((0, 0), pygame.DOUBLEBUF|pygame.OPENGL|pygame.FULLSCREEN)
         display = self._screen.get_size()
         gluPerspective(45, (display[0]/display[1]), 0.001, 50.0)
         

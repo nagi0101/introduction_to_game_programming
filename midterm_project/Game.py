@@ -30,7 +30,8 @@ class Game(metaclass=Singleton):
         pygame.display.set_caption("My Pygame Window")
 
         TimeManager(self)
-        TimeManager().fixed_delta_second = 0.05
+        TimeManager().fixed_delta_second = 1 / 20
+        TimeManager().framerate = 0
         
         EventManager(self)
         EventManager().add_handler(pygame.QUIT, self.handle_exit)

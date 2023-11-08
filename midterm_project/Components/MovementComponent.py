@@ -69,7 +69,6 @@ class MovementComponent(BaseComponents):
         if map_data[idx_z][idx_x] != 0:
             z = max(1, min(new_transform.translate.z, max_z))
             new_pos.z = z
-        print(new_pos.x, new_pos.z, map_data[idx_z][idx_x])
         new_transform.translate = new_pos
         
         if keys[pygame.K_LEFT]:
