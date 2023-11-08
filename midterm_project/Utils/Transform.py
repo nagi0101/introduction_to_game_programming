@@ -17,28 +17,10 @@ class Transform:
         return self.rotate.rotation_matrix()
 
     def translate_matrix(self) -> np.ndarray:
-        translate = self.translate
-        x = translate.x
-        y = translate.y
-        z = translate.z
-        return np.array((
-            (1, 0, 0, 0),
-            (0, 1, 0, 0),
-            (0, 0, 1, 0),
-            (x, y, z, 1),
-        ), np.float32)
+        return self.translate.translate_matrix()
 
     def scale_matrix(self) -> np.ndarray:
-        scale = self.scale
-        x = scale.x
-        y = scale.y
-        z = scale.z
-        return np.array((
-            (x, 0, 0, 0),
-            (0, y, 0, 0),
-            (0, 0, z, 0),
-            (0, 0, 0, 1),
-        ), np.float32)
+        return self.scale.scale_matrix()
 
     def transform_matrix(self) -> np.ndarray:
         scale = self.scale_matrix()
