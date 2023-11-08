@@ -24,6 +24,6 @@ class GameObject:
         for component in self.components:
             component.update(deltatime)
     
-    def fixed_update(self, deltatime):
+    def fixed_update(self, fixed_deltatime):
         for component in self.components:
-            component.fixed_update(deltatime)
+            component.fixed_update(fixed_deltatime)

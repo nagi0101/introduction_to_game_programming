@@ -31,6 +31,7 @@ class Game(metaclass=Singleton):
 
         TimeManager(self)
         TimeManager().framerate = 60
+        TimeManager().fixed_delta_second = 0.5
         
         EventManager(self)
         EventManager().add_handler(pygame.QUIT, self.handle_exit)
@@ -53,15 +54,28 @@ class Game(metaclass=Singleton):
             ), threshold=0.2, texture_path=".\\Resources\\Textures\\cube01.jpg"))
 
     def run(self):
-        self.start_time = time.time()
-        self.clear_time = 0
+        TimeManager().time = time.time()
+        TimeManager().accumulator = 0
         while not self.done:
+            print("Update")
+            TimeManager().delta_second = time.time() - TimeManager().time
+            TimeManager().time = time.time()
+            TimeManager().accumulator += TimeManager().delta_second
+
             EventManager().consume_events()
-            
+
             for object in self.game_objects:
                 object.update(TimeManager().delta_second)
+
+            while(TimeManager().must_update()):
+                print("FixedUpdate")
+                TimeManager().fixed_time = time.time()
+                TimeManager().accumulator -= TimeManager().fixed_delta_second
+                for object in self.game_objects:
+                    object.update(TimeManager().fixed_delta_second)
             
             RenderManager().draw()
+
         
         self.exit_game()
         

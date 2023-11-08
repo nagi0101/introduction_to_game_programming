@@ -19,6 +19,10 @@ class BaseComponents:
     def update(self, deltatime):
         for child in self.children:
             child.update(deltatime)
+
+    def fixed_update(self, fixed_deltatime:float) -> None:
+        for child in self.children:
+            child.fixed_update(fixed_deltatime)
     
     def append_child(self, child:"BaseComponents"):
         child.parent = self

@@ -33,7 +33,7 @@ class MovementComponent(BaseComponents):
         map_data = self.owner_object.game.map.map_data
         max_z, max_x = len(map_data) - 1, len(map_data[0]) - 1
         new_pos = self.owner_object.transform.translate + ds
-        idx_x, idx_z = int(new_pos.x), int(new_pos.z)
+        idx_x, idx_z = max(1, min(int(new_pos.x), max_x)), max(1, min(int(new_pos.z), max_z))
         
         if map_data[idx_z][idx_x] != 0:
             x = max(1, min(self.owner_object.transform.translate.x, max_x))

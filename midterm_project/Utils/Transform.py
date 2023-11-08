@@ -30,3 +30,23 @@ class Transform:
 
     def get_forward_vector(self) -> Vec3:
         return self.rotate.rotate_vec3(Vec3(0, 0, -1))
+    
+
+    def __add__(self, other:"Transform") -> "Transform":
+        return Transform(
+            translate=self.translate + other.translate, 
+            rotate=self.rotate + other.rotate, 
+            scale=self.scale + other.scale
+            )
+    
+    def __mul__(self, other:int|float) -> "Transform":        
+        if(type(other)==int or type(other)==float):
+            return Transform(
+                translate=self.translate * other,
+                rotate=self.rotate * other,
+                scale=self.scale * other
+                )
+
+    @classmethod
+    def lerp(cls, a, b, alpha) -> "Transform":
+        return a * (1 - alpha) + b * alpha
