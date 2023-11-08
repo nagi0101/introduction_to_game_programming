@@ -16,6 +16,10 @@ class BaseComponents:
     def __init__(self, transform:Transform=Transform()) -> None:
         self.transform = transform
     
+    def on_attached(self) -> None:
+        for child in self.children:
+            child.on_attached()
+    
     def update(self, deltatime):
         for child in self.children:
             child.update(deltatime)

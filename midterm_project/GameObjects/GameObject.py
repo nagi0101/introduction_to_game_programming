@@ -16,9 +16,10 @@ class GameObject:
         self.game = None
         self.transform = transform
 
-    def add_component(self, component):
+    def add_component(self, component:"BaseComponents"):
         self.components.append(component)
         component.owner_object = self
+        component.on_attached()
 
     def update(self, deltatime):
         for component in self.components:
