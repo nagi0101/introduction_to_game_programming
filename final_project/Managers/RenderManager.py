@@ -61,7 +61,7 @@ class RenderManager(metaclass=Singleton):
         self._game = game
         self._screen = pygame.display.set_mode((720, 480), pygame.DOUBLEBUF|pygame.OPENGL)
         display = self._screen.get_size()
-        gluPerspective(45, (display[0]/display[1]), 0.001, 50.0)
+        gluPerspective(45, (display[0]/display[1]), 0.001, 1000.0)
         
         vertex_shader = glCreateShader(GL_VERTEX_SHADER)
         glShaderSource(vertex_shader, self._vertex_shader_source)
