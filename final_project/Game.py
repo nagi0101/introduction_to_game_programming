@@ -13,6 +13,7 @@ from Utils.Rotator import Rot3
 from GameObjects.GameObject import GameObject
 from GameObjects.Player import Player
 from GameObjects.CollidableBox import CollidableBox
+from GameObjects.Cubemap import Cubemap
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
@@ -48,6 +49,8 @@ class Game(metaclass=Singleton):
                 translate=Vec3(1.5, 0, 3.5),
                 scale=Vec3.from_scalar(0.5)
             ), threshold=0.2, texture_path="final_project\\Resources\\Textures\\cube01.jpg"))
+
+        self.append_game_object(Cubemap())
 
     def run(self):
         TimeManager().initialize_time_data()

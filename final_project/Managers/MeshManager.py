@@ -1,4 +1,5 @@
 from typing import List
+from math import pi
 
 from OpenGL.GL import *
 
@@ -89,3 +90,14 @@ class MeshManager(metaclass=Singleton):
                 0, 1, 2, 0, 2, 3
                 )
             return MeshComponent(transform, vertices, indices, GL_TRIANGLES, texture_path)
+        
+        @classmethod
+        def cubemap(cls, size:float, texture_paths:List[str]) -> List[MeshComponent]:
+            return [
+                cls.plane(Transform(translate=Vec3(0, 0, -size), rotate=Rot3(0.0, 0.0, 0.0), scale=Vec3.from_scalar(size)), texture_path=texture_paths[0]),
+                cls.plane(Transform(translate=Vec3(0, 0, size), rotate=Rot3(0.0, 0.0, pi), scale=Vec3.from_scalar(size)), texture_path=texture_paths[1]),
+                cls.plane(Transform(translate=Vec3(size, 0, 0), rotate=Rot3(0.0, 0.0, -pi * 0.5), scale=Vec3.from_scalar(size)), texture_path=texture_paths[2]),
+                cls.plane(Transform(translate=Vec3(-size, 0, 0), rotate=Rot3(0.0, 0.0, pi * 0.5), scale=Vec3.from_scalar(size)), texture_path=texture_paths[3]),
+                cls.plane(Transform(translate=Vec3(0, size, 0), rotate=Rot3(0.0, pi * 0.5, 0.0), scale=Vec3.from_scalar(size)), texture_path=texture_paths[4]),
+                cls.plane(Transform(translate=Vec3(0, -size, 0), rotate=Rot3(0.0, -pi * 0.5, 0.0), scale=Vec3.from_scalar(size)), texture_path=texture_paths[5]),
+            ]
