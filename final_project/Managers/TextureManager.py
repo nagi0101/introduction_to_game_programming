@@ -16,7 +16,7 @@ class Texture:
     def __init__(self, filename) -> None:
         self._texture_buffer_id = glGenTextures(1)
         img = Image.open(filename)
-        img_data = np.array(list(img.getdata()), np.int8)
+        img_data = np.array(img, np.int8)
         
         glBindTexture(GL_TEXTURE_2D, self._texture_buffer_id)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.size[0], img.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, img_data)
