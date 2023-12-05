@@ -6,17 +6,17 @@ class Vec2:
     _data:np.ndarray
     
     def __init__(self, x=0, y=0):
-        self._data = np.array((x, y), np.float32)
+        self._data = np.array((x, y), np.float64)
     
     @property
-    def x(self) -> np.float32:
+    def x(self) -> np.float64:
         return float(self._data[0])
     @x.setter
     def x(self, x:float):
         self._data[0] = x
     
     @property
-    def y(self) -> np.float32:
+    def y(self) -> np.float64:
         return float(self._data[1])
     @y.setter
     def y(self, y:float):
@@ -40,8 +40,7 @@ class Vec2:
 
 class Vec3:
     def __init__(self, x:int|float=0, y:int|float=0, z:int|float=0):
-        data = np.array((x, y, z), np.float32)
-        self._data = np.array((x, y, z), np.float32)
+        self._data = np.array((x, y, z), np.float64)
     
     def translate_matrix(self) -> np.ndarray:
         x = self.x
@@ -52,7 +51,7 @@ class Vec3:
             (0, 1, 0, 0),
             (0, 0, 1, 0),
             (x, y, z, 1),
-        ), np.float32)
+        ), np.float64)
 
     def scale_matrix(self) -> np.ndarray:
         x = self.x
@@ -63,7 +62,7 @@ class Vec3:
             (0, y, 0, 0),
             (0, 0, z, 0),
             (0, 0, 0, 1),
-        ), np.float32)
+        ), np.float64)
     
     @property
     def x(self) -> float:
@@ -94,6 +93,10 @@ class Vec3:
     def from_scalar(cls, scalar:float) -> "Vec3":
         return Vec3(scalar, scalar, scalar)
     
+    @classmethod
+    def lerp(cls, a:"Vec3", b:"Vec3", alpha:float):
+        return a + (b - a) * alpha
+    
     def __neg__(self) -> "Vec3":
         return Vec3(-self.x, -self.y, -self.z)
     
@@ -107,4 +110,8 @@ class Vec3:
         if(type(other)==int or type(other)==float):
             return self * Vec3.from_scalar(other)
         elif(type(other)==Vec3):
-            return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
+            data = self._data * other._data
+            return Vec3(data[0], data[1], data[2])
+    
+    def __rmul__(self, other:Union[int|float, "Vec3"]) -> "Vec3":        
+        return self * other
