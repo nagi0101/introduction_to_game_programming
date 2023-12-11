@@ -154,9 +154,9 @@ class RenderManager(metaclass=Singleton):
         
         for(int i = 0; i < MAX_LIGHTS; ++i)
         {
-            //color += ComputeDirectionalLight(lights[i], material, vNormalOut, toEye);
+            color += ComputeDirectionalLight(lights[i], material, vNormalOut, toEye);
             //color += ComputePointLight(lights[i], material, vPosWorld, vNormalOut, toEye);
-            color += ComputeSpotLight(lights[i], material, vPosWorld, vNormalOut, toEye);
+            //color += ComputeSpotLight(lights[i], material, vPosWorld, vNormalOut, toEye);
         }
         
         vec4 texColor = texture(sampler, vTexCoordOut);

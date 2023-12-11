@@ -1,7 +1,7 @@
 import sys
 import time
 from typing import List
-from math import pi
+from math import pi, cos, sin
 
 import pygame
 
@@ -13,7 +13,6 @@ from Utils.Rotator import Rot3
 from GameObjects.GameObject import GameObject
 from GameObjects.Player import Player
 from GameObjects.CollidableBox import CollidableBox
-from GameObjects.Cubemap import Cubemap
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
@@ -46,11 +45,17 @@ class Game(metaclass=Singleton):
         ))
         self.append_game_object(self.player)
         
-        self.append_game_object(CollidableBox(transform=Transform(
-                translate=Vec3(0, 0, -5),
-                scale=Vec3.from_scalar(5)), 
-                texture_path="Resources\Textures\\blocks1.jpg"))
-        
+        N = 8
+        dtheta = 2 * pi / N
+        d = 5
+        for i in range(N):
+            x = d * cos(dtheta * i)
+            z = d * sin(dtheta * i)
+            self.append_game_object(CollidableBox(transform=Transform(
+                    translate=Vec3(x, 0, z),
+                    scale=Vec3.from_scalar(d)), 
+                    texture_path="Resources\Textures\\blocks1.jpg"))
+            
         LightComponent(
             transform=Transform(
                 translate=Vec3(0, 0, 0),
