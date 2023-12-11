@@ -20,6 +20,7 @@ from Managers.TimeManager import TimeManager
 from Managers.RenderManager import RenderManager
 
 from Components.MeshComponent import MeshComponent
+from Components.LightComponent import LightComponent
     
 class Game(metaclass=Singleton):
     done:bool = False
@@ -37,20 +38,28 @@ class Game(metaclass=Singleton):
         EventManager().add_handler(pygame.QUIT, self.handle_exit)
         EventManager().add_handler(pygame.KEYDOWN, self.handle_exit)
 
-        RenderManager(self)        
+        RenderManager(self)
 
         self.player=Player(transform=Transform(
-            translate=Vec3(1.5, 0, 1.5),
-            rotate=Rot3(0, 0, pi)
+            translate=Vec3(0, 0, 0),
+            rotate=Rot3(0, 0, 0)
         ))
         self.append_game_object(self.player)
         
         self.append_game_object(CollidableBox(transform=Transform(
-                translate=Vec3(1.5, 0, 3.5),
-                scale=Vec3.from_scalar(0.5)
-            ), threshold=0.2, texture_path="final_project\\Resources\\Textures\\cube01.jpg"))
-
-        self.append_game_object(Cubemap())
+                translate=Vec3(0, 0, -5),
+                scale=Vec3.from_scalar(5)), 
+                texture_path="Resources\Textures\\blocks1.jpg"))
+        
+        LightComponent(
+            transform=Transform(
+                translate=Vec3(0, 0, 0),
+                rotate=Rot3(0.0, 0.0, 0.0)),
+            strength=Vec3(1.0, 1.0, 1.0),
+            falloffStart=1, falloffEnd=10)
+    
+        
+        # self.append_game_object(Cubemap())
 
     def run(self):
         TimeManager().initialize_time_data()

@@ -17,40 +17,40 @@ class MeshManager(metaclass=Singleton):
         def box(self, transform:Transform = Transform(), texture_path:str|None=None, uv_scale:Vec2 = Vec2.from_scalar(1.0)) -> MeshComponent:
             vertices= [
                 # Up
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(0, 1, 0)),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(0, 1, 0)),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(0, 1, 0)),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(1.0, 0.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(0, 1, 0)),
 
                 #Down
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(0, -1, 0)),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(0, -1, 0)),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(0, -1, 0)),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(0, -1, 0)),
 
                 #Front
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(0, 0, 1)),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(0, 0, 1)),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(0, 0, 1)),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(0.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(0, 0, 1)),
 
                 #Back
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(0, 0, -1)),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(0, 0, -1)),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(0, 0, -1)),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 1.0, 0.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(0, 0, -1)),
 
                 #Right
-                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(1, -1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(1, 1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(1, 0, 0)),
+                Vertex(position=Vec3(1, -1, 1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(1, 0, 0)),
+                Vertex(position=Vec3(1, -1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(1, 0, 0)),
+                Vertex(position=Vec3(1, 1, -1), color=Vec3(1.0, 0.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(1, 0, 0)),
 
                 #Left
-                Vertex(position=Vec3(-1, 1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale),
-                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale),
-                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale),
+                Vertex(position=Vec3(-1, 1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 0.0) * uv_scale, normal=Vec3(-1, 0, 0)),
+                Vertex(position=Vec3(-1, -1, -1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(1.0, 1.0) * uv_scale, normal=Vec3(-1, 0, 0)),
+                Vertex(position=Vec3(-1, -1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 1.0) * uv_scale, normal=Vec3(-1, 0, 0)),
+                Vertex(position=Vec3(-1, 1, 1), color=Vec3(0.0, 1.0, 1.0), texcoord=Vec2(0.0, 0.0) * uv_scale, normal=Vec3(-1, 0, 0)),
             ]
             indices = (
                 0, 1, 2, 0, 2, 3,

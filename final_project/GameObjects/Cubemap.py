@@ -9,12 +9,12 @@ class Cubemap(GameObject):
         super().__init__(transform)
         
         meshes = MeshManager.Factory.cubemap(100, (
-            "final_project\\Resources\\Textures\\skybox\\front.jpg",
-            "final_project\\Resources\\Textures\\skybox\\back.jpg",
-            "final_project\\Resources\\Textures\\skybox\\right.jpg",
-            "final_project\\Resources\\Textures\\skybox\\left.jpg",
-            "final_project\\Resources\\Textures\\skybox\\top.jpg",
-            "final_project\\Resources\\Textures\\skybox\\bottom.jpg",
+            "Resources/Textures/skybox/front.jpg",
+            "Resources/Textures/skybox/back.jpg",
+            "Resources/Textures/skybox/right.jpg",
+            "Resources/Textures/skybox/left.jpg",
+            "Resources/Textures/skybox/top.jpg",
+            "Resources/Textures/skybox/bottom.jpg",
         ))
         
         for meshComp in meshes:
