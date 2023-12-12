@@ -59,10 +59,12 @@ class MovementComponent(BaseComponents):
         
         new_transform.translate = new_transform.translate + ds
         
-        if keys[pygame.K_LEFT]:
-            new_transform.rotate.yaw += 0.5 * pi * fixed_deltatime
-        elif keys[pygame.K_RIGHT]:
-            new_transform.rotate.yaw -= 0.5 * pi * fixed_deltatime
+        
+        pygame.event.set_grab(True)
+        rel = pygame.mouse.get_rel()
+        pygame.mouse.set_pos = (400, 300)
+        new_transform.rotate.yaw -= rel[0] * pi * 0.1 * fixed_deltatime
+        new_transform.rotate.pitch -= rel[1] * pi * 0.1 * fixed_deltatime
         
         self.fixed_transform_now = new_transform
         

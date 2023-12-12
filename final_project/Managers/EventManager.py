@@ -11,6 +11,7 @@ class EventManager(metaclass=Singleton):
     
     def __init__(self, game) -> None:
         self.game = game
+        pygame.mouse.set_visible(False)
         
     def add_handler(self, event:int, handler:Callable):
         if event not in self._handlers.keys():

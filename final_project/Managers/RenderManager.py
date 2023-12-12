@@ -77,6 +77,7 @@ class RenderManager(metaclass=Singleton):
     in vec3 vPosWorld;
     
     uniform Light lights[MAX_LIGHTS];
+    uniform int lightType; 
     uniform sampler2D sampler;
     uniform Material material;
     uniform bool useTexture;
@@ -154,9 +155,9 @@ class RenderManager(metaclass=Singleton):
         
         for(int i = 0; i < MAX_LIGHTS; ++i)
         {
-            color += ComputeDirectionalLight(lights[i], material, vNormalOut, toEye);
-            //color += ComputePointLight(lights[i], material, vPosWorld, vNormalOut, toEye);
-            //color += ComputeSpotLight(lights[i], material, vPosWorld, vNormalOut, toEye);
+            color += lightType == 1 ? ComputeDirectionalLight(lights[i], material, vNormalOut, toEye) : vec3(0.0);
+            color += lightType == 2 ? ComputePointLight(lights[i], material, vPosWorld, vNormalOut, toEye) : vec3(0.0);
+            color += lightType == 3 ? ComputeSpotLight(lights[i], material, vPosWorld, vNormalOut, toEye) : vec3(0.0);
         }
         
         vec4 texColor = texture(sampler, vTexCoordOut);
@@ -207,6 +208,9 @@ class RenderManager(metaclass=Singleton):
 
         location = glGetUniformLocation(self._shader_program, 'eyeWorld')
         glUniform3fv(location, 1, self._game.player.transform.translate._data)
+        
+        location = glGetUniformLocation(self._shader_program, 'lightType')
+        glUniform1i(location, self._game.light_type)
 
         for idx, lightComponent in enumerate(self._light_components):
             lightComponent.copy_data_to_index(self._shader_program, idx)

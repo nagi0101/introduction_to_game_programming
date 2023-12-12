@@ -13,13 +13,13 @@ from Utils.Rotator import Rot3
 from GameObjects.GameObject import GameObject
 from GameObjects.Player import Player
 from GameObjects.CollidableBox import CollidableBox
+from GameObjects.Light import Light
 
 from Managers.EventManager import EventManager
 from Managers.TimeManager import TimeManager
 from Managers.RenderManager import RenderManager
 
 from Components.MeshComponent import MeshComponent
-from Components.LightComponent import LightComponent
     
 class Game(metaclass=Singleton):
     done:bool = False
@@ -36,6 +36,7 @@ class Game(metaclass=Singleton):
         EventManager(self)
         EventManager().add_handler(pygame.QUIT, self.handle_exit)
         EventManager().add_handler(pygame.KEYDOWN, self.handle_exit)
+        EventManager().add_handler(pygame.KEYDOWN, self.handle_light)
 
         RenderManager(self)
 
@@ -56,17 +57,18 @@ class Game(metaclass=Singleton):
                     scale=Vec3.from_scalar(d)), 
                     texture_path="Resources\Textures\\blocks1.jpg"))
             
-        LightComponent(
+        self.light = Light(
             transform=Transform(
                 translate=Vec3(0, 0, 0),
                 rotate=Rot3(0.0, 0.0, 0.0)),
             strength=Vec3(1.0, 1.0, 1.0),
             falloffStart=1, falloffEnd=10)
+        self.append_game_object(self.light)
+        self.light_type = 1
     
-        
         # self.append_game_object(Cubemap())
 
-    def run(self):
+    def run(self):       
         TimeManager().initialize_time_data()
         while not self.done:
             while(TimeManager().must_update()):
@@ -85,14 +87,21 @@ class Game(metaclass=Singleton):
                 object.update(TimeManager().delta_second)
             
             RenderManager().draw()
-
         
         self.exit_game()
         
     def handle_exit(self, e:pygame.event.Event):
         if(e.type == pygame.QUIT or e.key == pygame.K_q):
             self.done = True
-
+            
+    def handle_light(self, e:pygame.event.Event):
+        if(e.key == pygame.K_1):
+            self.light_type = 1
+        elif(e.key == pygame.K_2):
+            self.light_type = 2
+        elif(e.key == pygame.K_3):
+            self.light_type = 3
+            
     def exit_game(self):
         pygame.quit()
         sys.exit()
